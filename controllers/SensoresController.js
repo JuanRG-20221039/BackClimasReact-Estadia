@@ -21,7 +21,9 @@ export const createHistorialDatosSensor = async (req, res) => {
 // Obtener todos los registros en el historial de datos de sensores
 export const getHistorialDatosSensores = async (req, res) => {
     try {
-        const historial = await HistorialDatosSensoresModel.findAll();
+        const historial = await HistorialDatosSensoresModel.findAll({
+            attributes: ['clv_aula', 'vch_mac_dispositivo', 'variable', 'valor', 'fecha_hora']
+        });
         res.json(historial);
     } catch (error) {
         console.error(error);
@@ -29,11 +31,11 @@ export const getHistorialDatosSensores = async (req, res) => {
     }
 };
 
-// Obtener un registro en el historial de datos de sensores por su ID
-export const getHistorialDatosSensorById = async (req, res) => {
-    const { id } = req.params;
+// Obtener un registro en el historial de datos de sensores por su MAC
+export const getHistorialDatosSensorByMac = async (req, res) => {
+    const { mac } = req.params;
     try {
-        const registro = await HistorialDatosSensoresModel.findByPk(id);
+        const registro = await HistorialDatosSensoresModel.findAll({ where: { vch_mac_dispositivo: mac }, attributes: ['clv_aula', 'vch_mac_dispositivo', 'variable', 'valor', 'fecha_hora'] });
         if (registro) {
             res.json(registro);
         } else {
@@ -42,45 +44,5 @@ export const getHistorialDatosSensorById = async (req, res) => {
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: 'Error al obtener el registro en el historial de datos de sensores' });
-    }
-};
-
-// Actualizar un registro en el historial de datos de sensores
-export const updateHistorialDatosSensor = async (req, res) => {
-    const { id } = req.params;
-    const { clv_aula, vch_mac_dispositivo, variable, valor, fecha_hora } = req.body;
-    try {
-        const registro = await HistorialDatosSensoresModel.findByPk(id);
-        if (registro) {
-            registro.clv_aula = clv_aula;
-            registro.vch_mac_dispositivo = vch_mac_dispositivo;
-            registro.variable = variable;
-            registro.valor = valor;
-            registro.fecha_hora = fecha_hora;
-            await registro.save();
-            res.json(registro);
-        } else {
-            res.status(404).json({ error: 'Registro en el historial de datos de sensores no encontrado' });
-        }
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: 'Error al actualizar el registro en el historial de datos de sensores' });
-    }
-};
-
-// Eliminar un registro en el historial de datos de sensores
-export const deleteHistorialDatosSensor = async (req, res) => {
-    const { id } = req.params;
-    try {
-        const registro = await HistorialDatosSensoresModel.findByPk(id);
-        if (registro) {
-            await registro.destroy();
-            res.json({ message: 'Registro en el historial de datos de sensores eliminado exitosamente' });
-        } else {
-            res.status(404).json({ error: 'Registro en el historial de datos de sensores no encontrado' });
-        }
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: 'Error al eliminar el registro en el historial de datos de sensores' });
     }
 };
