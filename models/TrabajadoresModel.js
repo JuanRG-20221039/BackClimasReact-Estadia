@@ -1,7 +1,7 @@
 // Importación de la conexión con la base de datos
-import db from "../database/db";
+import db from "../database/db.js";
 import { DataTypes } from "sequelize";
-import TipoDeTrabajadorModel from './TipoDeTrabajadorModel';
+import TipoDeTrabajadorModel from './TipoTrabajadorModel.js';
 
 // Modelo de tbl_trabajadores
 const TrabajadoresModel = db.define('tbl_trabajadores', {

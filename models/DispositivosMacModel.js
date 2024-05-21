@@ -1,6 +1,6 @@
-import db from "../database/db";
+import db from "../database/db.js";
 import { DataTypes } from "sequelize";
-import AulasModel from "./AulasModel";
+import AulasModel from "./AulasModel.js";
 
 const DispositivosMacModel = db.define('tbl_dispositivos_mac', {
     id: {

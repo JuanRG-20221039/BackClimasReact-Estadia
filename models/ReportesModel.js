@@ -1,8 +1,8 @@
-import db from "../database/db";
+import db from "../database/db.js";
 import { DataTypes } from "sequelize";
-import TrabajadoresModel from "./TrabajadoresModel";
-import TipoDeReporteModel from "./TipoDeReporteModel";
-import AulasModel from "./AulasModel";
+import TrabajadoresModel from "./TrabajadoresModel.js";
+import TipoDeReporteModel from "./TipoReporteModel.js";
+import AulasModel from "./AulasModel.js";
 
 const ReportesModel = db.define('tbl_reportes', {
     clv_reporte: {

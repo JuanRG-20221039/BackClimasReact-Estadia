@@ -1,6 +1,6 @@
-import db from "../database/db";
+import db from '../database/db.js';
 import { DataTypes } from "sequelize";
-import TrabajadoresModel from "./TrabajadoresModel";
+import TrabajadoresModel from "./TrabajadoresModel.js";
 
 const BitacoraModel = db.define('tbl_bitacora', {
     clv_bitacora: {

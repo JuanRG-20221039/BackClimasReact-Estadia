@@ -1,7 +1,7 @@
-import db from "../database/db";
+import db from "../database/db.js";
 import { DataTypes } from "sequelize";
-import ReportesModel from "./ReportesModel";
-import TrabajadoresModel from "./TrabajadoresModel";
+import ReportesModel from "./ReportesModel.js";
+import TrabajadoresModel from "./TrabajadoresModel.js";
 
 const HistorialDeReportesModel = db.define('tbl_historial_de_reportes', {
     clv_historial_reporte: {

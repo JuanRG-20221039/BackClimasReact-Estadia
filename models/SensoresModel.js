@@ -1,7 +1,7 @@
-import db from "../database/db";
+import db from "../database/db.js";
 import { DataTypes } from "sequelize";
-import AulasModel from "./AulasModel";
-import DispositivosMacModel from "./DispositivosMacModel";
+import AulasModel from "./AulasModel.js";
+import DispositivosMacModel from "./DispositivosMacModel.js";
 
 const HistorialDatosSensoresModel = db.define('tbl_historial_datos_sensores', {
     clv_aula: {

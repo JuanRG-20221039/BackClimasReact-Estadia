@@ -1,8 +1,8 @@
-import db from "../database/db";
+import db from "../database/db.js";
 import { DataTypes } from "sequelize";
-import TipoMantenimientoModel from "./TipoMantenimientoModel";
-import AulasModel from "./AulasModel";
-import TrabajadoresModel from "./TrabajadoresModel";
+import TipoMantenimientoModel from "./TipoMantenimientoModel.js";
+import AulasModel from "./AulasModel.js";
+import TrabajadoresModel from "./TrabajadoresModel.js";
 
 const MantenimientoModel = db.define('tbl_mantenimiento', {
     clv_mantenimiento: {

@@ -1,5 +1,5 @@
 //importacion de la conexion con la base de datos
-import db from "../database/db";
+import db from "../database/db.js";
 import { DataTypes } from "sequelize";
 
 //modelo de -- tbl_aulas
