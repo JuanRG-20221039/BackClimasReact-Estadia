@@ -1,92 +1,67 @@
-import ClimasModel from '../models/ClimasModel.js';
+import Clima from '../models/model_aulas.js';
 
-// Crear un nuevo registro de clima
-export const createClima = async (req, res) => {
-    const { vch_modelo, vch_marca, vch_capacidad, vch_voltaje, date_ingreso, clv_edificio, clv_aula, estado } = req.body;
-    try {
-        const nuevoClima = await ClimasModel.create({ 
-            vch_modelo, 
-            vch_marca, 
-            vch_capacidad, 
-            vch_voltaje, 
-            date_ingreso, 
-            clv_edificio, 
-            clv_aula, 
-            estado 
-        });
-        res.status(201).json(nuevoClima);
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: 'Error al crear el registro de clima' });
-    }
-};
-
-// Obtener todos los registros de clima
+// Función para obtener todos los registros de climas
 export const getClimas = async (req, res) => {
     try {
-        const climas = await ClimasModel.findAll();
+        const climas = await Clima.findAll();
         res.json(climas);
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: 'Error al obtener los registros de clima' });
+        res.status(500).json({ message: error.message });
     }
 };
 
-// Obtener un registro de clima por su clave
+// Función para obtener un registro de clima por su ID
 export const getClimaById = async (req, res) => {
     const { id } = req.params;
     try {
-        const clima = await ClimasModel.findByPk(id);
-        if (clima) {
-            res.json(clima);
-        } else {
-            res.status(404).json({ error: 'Registro de clima no encontrado' });
+        const clima = await Clima.findByPk(id);
+        if (!clima) {
+            return res.status(404).json({ message: 'Clima no encontrado' });
         }
+        res.json(clima);
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: 'Error al obtener el registro de clima' });
+        res.status(500).json({ message: error.message });
     }
 };
 
-// Actualizar un registro de clima
+// Función para crear un nuevo registro de clima
+export const createClima = async (req, res) => {
+    const newClima = req.body;
+    try {
+        const clima = await Clima.create(newClima);
+        res.status(201).json(clima);
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+};
+
+// Función para actualizar un registro de clima por su ID
 export const updateClima = async (req, res) => {
     const { id } = req.params;
-    const { vch_modelo, vch_marca, vch_capacidad, vch_voltaje, date_ingreso, clv_edificio, clv_aula, estado } = req.body;
+    const updatedClima = req.body;
     try {
-        const clima = await ClimasModel.findByPk(id);
-        if (clima) {
-            clima.vch_modelo = vch_modelo;
-            clima.vch_marca = vch_marca;
-            clima.vch_capacidad = vch_capacidad;
-            clima.vch_voltaje = vch_voltaje;
-            clima.date_ingreso = date_ingreso;
-            clima.clv_edificio = clv_edificio;
-            clima.clv_aula = clv_aula;
-            clima.estado = estado;
-            await clima.save();
-            res.json(clima);
-        } else {
-            res.status(404).json({ error: 'Registro de clima no encontrado' });
+        const clima = await Clima.findByPk(id);
+        if (!clima) {
+            return res.status(404).json({ message: 'Clima no encontrado' });
         }
+        await clima.update(updatedClima);
+        res.json(clima);
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: 'Error al actualizar el registro de clima' });
+        res.status(400).json({ message: error.message });
     }
 };
 
-// Eliminar un registro de clima
+// Función para eliminar un registro de clima por su ID
 export const deleteClima = async (req, res) => {
     const { id } = req.params;
     try {
-        const clima = await ClimasModel.findByPk(id);
-        if (clima) {
-            await clima.destroy();
-            res.json({ message: 'Registro de clima eliminado exitosamente' });
-        } else {
-            res.status(404).json({ error: 'Registro de clima no encontrado' });
+        const clima = await Clima.findByPk(id);
+        if (!clima) {
+            return res.status(404).json({ message: 'Clima no encontrado' });
         }
+        await clima.destroy();
+        res.json({ message: 'Clima eliminado exitosamente' });
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: 'Error al eliminar el registro de clima' });
+        res.status(500).json({ message: error.message });
     }
 };

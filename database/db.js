@@ -1,8 +1,15 @@
-import {Sequelize} from 'sequelize'
+import { Sequelize } from 'sequelize';
 
-const db = new Sequelize('climabase','root','',{
-    host:'localhost',
-    dialect:'mysql'
-})
+const db = new Sequelize('climabase', 'root', '', {
+    host: 'localhost',
+    dialect: 'mysql'
+});
 
-export default db
+try {
+    await db.authenticate();
+    console.log('Conexion exitosa a la base de datos');
+} catch (error) {
+    console.log(`El error de la conexion es: ${error}`);
+}
+
+export default db;

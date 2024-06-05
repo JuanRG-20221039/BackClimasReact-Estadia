@@ -1,76 +1,59 @@
-import TipoDeReporteModel from '../models/TipoReporteModel.js';
-
-// Crear un nuevo tipo de reporte
-export const createTipoReporte = async (req, res) => {
-    const { vch_tipo_reporte } = req.body;
-    try {
-        const nuevoTipoReporte = await TipoDeReporteModel.create({ vch_tipo_reporte });
-        res.status(201).json(nuevoTipoReporte);
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: 'Error al crear el tipo de reporte' });
-    }
-};
+import TipoReporte from '../models/model_tipo_reporte.js';
 
 // Obtener todos los tipos de reporte
 export const getTiposReporte = async (req, res) => {
     try {
-        const tiposReporte = await TipoDeReporteModel.findAll();
-        res.json(tiposReporte);
+        const tipos = await TipoReporte.findAll();
+        res.json(tipos);
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: 'Error al obtener los tipos de reporte' });
+        res.json({ message: error.message });
     }
 };
 
-// Obtener un tipo de reporte por su ID
-export const getTipoReporteById = async (req, res) => {
-    const { id } = req.params;
+// Obtener un tipo de reporte por ID
+export const getTipoReporte = async (req, res) => {
     try {
-        const tipoReporte = await TipoDeReporteModel.findByPk(id);
-        if (tipoReporte) {
-            res.json(tipoReporte);
-        } else {
-            res.status(404).json({ error: 'Tipo de reporte no encontrado' });
-        }
+        const tipo = await TipoReporte.findByPk(req.params.Id_tipo_reporte);
+        res.json(tipo);
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: 'Error al obtener el tipo de reporte' });
+        res.json({ message: error.message });
+    }
+};
+
+// Crear un nuevo tipo de reporte
+export const createTipoReporte = async (req, res) => {
+    try {
+        await TipoReporte.create(req.body);
+        res.json({ message: 'Tipo de reporte creado correctamente' });
+    } catch (error) {
+        res.json({ message: error.message });
     }
 };
 
 // Actualizar un tipo de reporte
 export const updateTipoReporte = async (req, res) => {
-    const { id } = req.params;
-    const { vch_tipo_reporte } = req.body;
     try {
-        const tipoReporte = await TipoDeReporteModel.findByPk(id);
-        if (tipoReporte) {
-            tipoReporte.vch_tipo_reporte = vch_tipo_reporte;
-            await tipoReporte.save();
-            res.json(tipoReporte);
-        } else {
-            res.status(404).json({ error: 'Tipo de reporte no encontrado' });
-        }
+        await TipoReporte.update(req.body, {
+            where: {
+                Id_tipo_reporte: req.params.Id_tipo_reporte
+            }
+        });
+        res.json({ message: 'Tipo de reporte actualizado correctamente' });
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: 'Error al actualizar el tipo de reporte' });
+        res.json({ message: error.message });
     }
 };
 
 // Eliminar un tipo de reporte
 export const deleteTipoReporte = async (req, res) => {
-    const { id } = req.params;
     try {
-        const tipoReporte = await TipoDeReporteModel.findByPk(id);
-        if (tipoReporte) {
-            await tipoReporte.destroy();
-            res.json({ message: 'Tipo de reporte eliminado exitosamente' });
-        } else {
-            res.status(404).json({ error: 'Tipo de reporte no encontrado' });
-        }
+        await TipoReporte.destroy({
+            where: {
+                Id_tipo_reporte: req.params.Id_tipo_reporte
+            }
+        });
+        res.json({ message: 'Tipo de reporte eliminado correctamente' });
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: 'Error al eliminar el tipo de reporte' });
+        res.json({ message: error.message });
     }
 };
