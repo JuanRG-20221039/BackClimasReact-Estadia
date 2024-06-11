@@ -1,4 +1,5 @@
 import Aula from '../models/model_aulas.js';
+import Edificio from '../models/model_edificios.js';
 
 // Obtener todas las aulas
 export const getAulas = async (req, res) => {
@@ -70,6 +71,47 @@ export const eliminarAula = async (req, res) => {
     }
   } catch (error) {
     console.error('Error al eliminar el aula:', error);
+    res.status(500).json({ error: 'Error interno del servidor' });
+  }
+};
+
+// Obtener todas las aulas de un edificio específico
+export const getAulasPorEdificio = async (req, res) => {
+  const { idEdificio } = req.params;
+  try {
+    const aulas = await Aula.findAll({ where: { Id_edificio: idEdificio } });
+    if (aulas.length === 0) {
+      res.status(404).json({ error: 'No se encontraron aulas para el edificio especificado' });
+    } else {
+      res.json(aulas);
+    }
+  } catch (error) {
+    console.error('Error al obtener las aulas por edificio:', error);
+    res.status(500).json({ error: 'Error interno del servidor' });
+  }
+};
+
+// Obtener un aula por su nombre y el edificio donde se encuentra
+export const getAulaPorNombreYEdificio = async (req, res) => {
+  const { nombreAula, idEdificio } = req.params;
+  try {
+    const aula = await Aula.findOne({
+      where: { Nombre_aula: nombreAula, Id_edificio: idEdificio },
+      include: [
+        {
+          model: Edificio,
+          as: 'edificio',
+          attributes: ['Nombre_edificio']
+        }
+      ]
+    });
+    if (!aula) {
+      res.status(404).json({ error: 'Aula no encontrada' });
+    } else {
+      res.json(aula);
+    }
+  } catch (error) {
+    console.error('Error al obtener el aula por nombre y edificio:', error);
     res.status(500).json({ error: 'Error interno del servidor' });
   }
 };

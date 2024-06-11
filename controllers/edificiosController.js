@@ -1,7 +1,6 @@
 import Edificio from '../models/model_edificios.js';
 
-// Controlador para la tabla de edificios
-
+// Obtener todos los edificios
 export const getEdificios = async (req, res) => {
     try {
         const edificios = await Edificio.findAll();
@@ -12,6 +11,7 @@ export const getEdificios = async (req, res) => {
     }
 };
 
+// Crear un nuevo edificio
 export const createEdificio = async (req, res) => {
     const { Nombre_edificio, Imagen } = req.body;
     try {
@@ -23,6 +23,7 @@ export const createEdificio = async (req, res) => {
     }
 };
 
+// Actualizar un edificio por su ID
 export const updateEdificio = async (req, res) => {
     const id = req.params.id;
     const { Nombre_edificio, Imagen } = req.body;
@@ -35,6 +36,7 @@ export const updateEdificio = async (req, res) => {
     }
 };
 
+// Eliminar un edificio por su ID
 export const deleteEdificio = async (req, res) => {
     const id = req.params.id;
     try {
@@ -43,5 +45,21 @@ export const deleteEdificio = async (req, res) => {
     } catch (error) {
         console.error('Error al eliminar el edificio:', error);
         res.status(500).json({ message: 'Error al eliminar el edificio' });
+    }
+};
+
+// Obtener un edificio por su nombre
+export const getEdificioPorNombre = async (req, res) => {
+    const { nombre } = req.params;
+    try {
+        const edificio = await Edificio.findOne({ where: { Nombre_edificio: nombre } });
+        if (!edificio) {
+            res.status(404).json({ message: 'Edificio no encontrado' });
+        } else {
+            res.json(edificio);
+        }
+    } catch (error) {
+        console.error('Error al obtener el edificio por nombre:', error);
+        res.status(500).json({ message: 'Error al obtener el edificio' });
     }
 };

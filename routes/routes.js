@@ -1,9 +1,9 @@
 import express from 'express';
 
-import { getAulas, crearAula, getAulaById, actualizarAula, eliminarAula } from '../controllers/aulasController.js';
+import { getAulas, crearAula, getAulaById, actualizarAula, eliminarAula, getAulasPorEdificio, getAulaPorNombreYEdificio } from '../controllers/aulasController.js';
 import { getClimas, getClimaById, createClima, updateClima, deleteClima } from '../controllers/climasController.js';
 import { getDias, createDia, updateDia, deleteDia } from '../controllers/diasController.js';
-import { getEdificios, createEdificio, updateEdificio, deleteEdificio } from '../controllers/edificiosController.js';
+import { getEdificios, createEdificio, updateEdificio, deleteEdificio, getEdificioPorNombre  } from '../controllers/edificiosController.js';
 import { getHistorialAcceso, createRegistroAcceso } from '../controllers/historialAccesoController.js';
 import { getHistoricoIOT, createRegistroHistoricoIOT } from '../controllers/historicoIOTController.js';
 import { getHorarios, getHorario, createHorario, updateHorario, deleteHorario } from '../controllers/horarioController.js';
@@ -11,11 +11,11 @@ import { getHoras, getHora, createHora, updateHora, deleteHora } from '../contro
 import { getIoTDevices, getIoTDevice, createIoTDevice, updateIoTDevice, deleteIoTDevice } from '../controllers/iotController.js';
 import { getMarcas, getMarca, createMarca, updateMarca, deleteMarca } from '../controllers/marcaController.js';
 import { getPerfiles, getPerfil, createPerfil, updatePerfil, deletePerfil } from '../controllers/perfilController.js';
-import { getReportesUsuario, getReporteUsuario, createReporteUsuario, updateReporteUsuario, deleteReporteUsuario } from '../controllers/reporteUsuarioController.js';
+import { getReportesUsuario, getReporteUsuario, createReporteUsuario, updateReporteUsuario, deleteReporteUsuario, getReportesPorAula } from '../controllers/reporteUsuarioController.js';
 import { getTiposReporte, getTipoReporte, createTipoReporte, updateTipoReporte, deleteTipoReporte } from '../controllers/tipoReporteController.js';
 import { getTiposTrabajadores, getTipoTrabajador, createTipoTrabajador, updateTipoTrabajador, deleteTipoTrabajador } from '../controllers/tipoTrabajadorController.js';
 import { getTrabajadores, getTrabajador, createTrabajador, updateTrabajador, deleteTrabajador } from '../controllers/trabajadorController.js';
-import { getUbicacionesClimas, getUbicacionClima, createUbicacionClima, updateUbicacionClima, deleteUbicacionClima } from '../controllers/ubicacionClimaController.js';
+import { getUbicacionesClimas, getUbicacionClima, createUbicacionClima, updateUbicacionClima, deleteUbicacionClima, getUbicacionesClimasPorAula } from '../controllers/ubicacionClimaController.js';
 
 const router = express.Router();
 
@@ -24,6 +24,8 @@ router.post('/aulas', crearAula);
 router.get('/aulas/:id', getAulaById);
 router.put('/aulas/:id', actualizarAula);
 router.delete('/aulas/:id', eliminarAula);
+router.get('/aulas/edificio/:idEdificio', getAulasPorEdificio);
+router.get('/aulas/nombre/:nombreAula/edificio/:idEdificio', getAulaPorNombreYEdificio);
 
 router.get('/climas', getClimas);
 router.get('/climas/:id', getClimaById);
@@ -40,6 +42,7 @@ router.get('/edificios', getEdificios);
 router.post('/edificios', createEdificio);
 router.put('/edificios/:id', updateEdificio);
 router.delete('/edificios/:id', deleteEdificio);
+router.get('/edificios/nombre/:nombre', getEdificioPorNombre);
 
 router.get('/historial-acceso', getHistorialAcceso);
 router.post('/historial-acceso', createRegistroAcceso);
@@ -82,6 +85,7 @@ router.get('/reportesUsuario/:Id_reporte_usuario', getReporteUsuario);
 router.post('/reportesUsuario', createReporteUsuario);
 router.put('/reportesUsuario/:Id_reporte_usuario', updateReporteUsuario);
 router.delete('/reportesUsuario/:Id_reporte_usuario', deleteReporteUsuario);
+router.get('/reportes/aula/:idAula', getReportesPorAula);
 
 router.get('/tiposReporte', getTiposReporte);
 router.get('/tiposReporte/:Id_tipo_reporte', getTipoReporte);
@@ -106,5 +110,6 @@ router.get('/ubicaciones-climas/:Id_ubicacion_Clima', getUbicacionClima);
 router.post('/ubicaciones-climas', createUbicacionClima);
 router.put('/ubicaciones-climas/:Id_ubicacion_Clima', updateUbicacionClima);
 router.delete('/ubicaciones-climas/:Id_ubicacion_Clima', deleteUbicacionClima);
+router.get('/ubicaciones_climas/aula/:idAula', getUbicacionesClimasPorAula);
 
 export default router;

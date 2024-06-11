@@ -57,3 +57,19 @@ export const deleteUbicacionClima = async (req, res) => {
         res.json({ message: error.message });
     }
 };
+
+// Obtener todas las ubicaciones de climas asociadas a un aula específica
+export const getUbicacionesClimasPorAula = async (req, res) => {
+    const { idAula } = req.params;
+    try {
+        const ubicacionesClimas = await UbicacionClima.findAll({ where: { Id_aula: idAula } });
+        if (ubicacionesClimas.length === 0) {
+            res.status(404).json({ message: 'No se encontraron ubicaciones de clima para el aula especificada' });
+        } else {
+            res.json(ubicacionesClimas);
+        }
+    } catch (error) {
+        console.error('Error al obtener las ubicaciones de climas por aula:', error);
+        res.status(500).json({ message: 'Error interno del servidor' });
+    }
+};

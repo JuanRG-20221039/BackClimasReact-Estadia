@@ -57,3 +57,19 @@ export const deleteReporteUsuario = async (req, res) => {
         res.json({ message: error.message });
     }
 };
+
+// Obtener todos los reportes de usuario asociados a un aula específica
+export const getReportesPorAula = async (req, res) => {
+    const { idAula } = req.params;
+    try {
+        const reportes = await ReporteUsuario.findAll({ where: { Id_aula: idAula } });
+        if (reportes.length === 0) {
+            res.status(404).json({ message: 'No se encontraron reportes para el aula especificada' });
+        } else {
+            res.json(reportes);
+        }
+    } catch (error) {
+        console.error('Error al obtener los reportes por aula:', error);
+        res.status(500).json({ message: 'Error interno del servidor' });
+    }
+};

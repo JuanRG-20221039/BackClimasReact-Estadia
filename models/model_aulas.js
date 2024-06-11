@@ -1,5 +1,7 @@
+// model_aulas.js
 import { DataTypes } from 'sequelize';
 import db from '../database/db.js';
+import Edificio from './model_edificios.js';
 
 const Aula = db.define('tbl_aulas', {
   Id_aula: {
@@ -18,5 +20,7 @@ const Aula = db.define('tbl_aulas', {
 }, {
   timestamps: false
 });
+
+Aula.belongsTo(Edificio, { foreignKey: 'Id_edificio', as: 'edificio' });
 
 export default Aula;
