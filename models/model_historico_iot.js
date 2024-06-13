@@ -7,7 +7,7 @@ const HistoricoIOT = db.define('tbl_historico_iot', {
         primaryKey: true,
         autoIncrement: true
     },
-    Id_iot: {
+    Id_vinculacion_iot: {
         type: DataTypes.INTEGER,
         allowNull: true
     },

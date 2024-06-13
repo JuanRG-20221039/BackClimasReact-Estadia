@@ -27,7 +27,7 @@ const Clima = db.define('tbl_climas', {
         type: DataTypes.DATE,
         allowNull: true
     },
-    Id_iot: {
+    Id_vinculacion_iot: {
         type: DataTypes.INTEGER,
         allowNull: true
     }

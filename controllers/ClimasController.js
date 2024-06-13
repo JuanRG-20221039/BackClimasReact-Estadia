@@ -1,4 +1,4 @@
-import Clima from '../models/model_aulas.js';
+import Clima from '../models/model_climas.js';
 
 // Función para obtener todos los registros de climas
 export const getClimas = async (req, res) => {
@@ -61,6 +61,20 @@ export const deleteClima = async (req, res) => {
         }
         await clima.destroy();
         res.json({ message: 'Clima eliminado exitosamente' });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+// Función para obtener todos los climas de una marca específica
+export const getClimasPorMarca = async (req, res) => {
+    const { idMarca } = req.params;
+    try {
+        const climas = await Clima.findAll({ where: { Id_marca: idMarca } });
+        if (climas.length === 0) {
+            return res.status(404).json({ message: 'No se encontraron climas para la marca especificada' });
+        }
+        res.json(climas);
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
