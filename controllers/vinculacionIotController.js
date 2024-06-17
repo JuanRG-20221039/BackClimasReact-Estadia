@@ -1,5 +1,6 @@
 // controllers/vinculacionIotController.js
 import VinculacionIot from '../models/model_vinculacion_iot.js';
+import { Op } from 'sequelize';
 
 // Obtener todas las vinculaciones
 export const getVinculacionesIot = async (req, res) => {
@@ -63,6 +64,27 @@ export const deleteVinculacionIot = async (req, res) => {
         } else {
             res.status(404).json({ message: 'Vinculacion no encontrada' });
         }
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+// Obtener un módulo IoT por su ID y determinar si es placa principal o secundaria
+export const getModuloIotById = async (req, res) => {
+    const { id } = req.params;
+    try {
+        const vinculacion = await VinculacionIot.findOne({
+            where: {
+                [Op.or]: [{ Id_placa_principal: id }, { Id_Placa_secundaria: id }]
+            }
+        });
+
+        if (!vinculacion) {
+            return res.status(404).json({ message: 'Módulo IoT no encontrado' });
+        }
+
+        const tipoPlaca = vinculacion.Id_placa_principal === parseInt(id) ? 0 : 1;
+        res.json({ vinculacion, tipoPlaca });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }

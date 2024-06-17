@@ -23,10 +23,22 @@ export const getIoTDevice = async (req, res) => {
 // Crear un nuevo dispositivo IoT
 export const createIoTDevice = async (req, res) => {
     try {
-        await IoT.create(req.body);
+        // Crear un objeto con todos los valores en 0
+        const newIoTDevice = {
+            Mac_dispositivo: req.body.Mac_dispositivo,
+            Presencia_personas: 0,
+            Humedad_value: 0,
+            Temperatura_value: 0,
+            Estado_clima: 0
+            // Agrega aquí cualquier otro campo que necesites inicializar en 0
+        };
+
+        // Crear el dispositivo IoT en la base de datos
+        await IoT.create(newIoTDevice);
+
         res.json({ message: 'Dispositivo IoT creado correctamente' });
     } catch (error) {
-        res.json({ message: error.message });
+        res.status(500).json({ message: error.message });
     }
 };
 
@@ -55,5 +67,20 @@ export const deleteIoTDevice = async (req, res) => {
         res.json({ message: 'Dispositivo IoT eliminado correctamente' });
     } catch (error) {
         res.json({ message: error.message });
+    }
+};
+
+// Obtener un dispositivo IoT por su MAC
+export const getIoTDeviceByMac = async (req, res) => {
+    const { mac } = req.params;
+    try {
+        const iotDevice = await IoT.findOne({ where: { Mac_dispositivo: mac } });
+        if (iotDevice) {
+            res.json(iotDevice);
+        } else {
+            res.status(404).json({ message: 'Dispositivo IoT no encontrado' });
+        }
+    } catch (error) {
+        res.status(500).json({ message: error.message });
     }
 };

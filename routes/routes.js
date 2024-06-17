@@ -8,7 +8,7 @@ import { getHistorialAcceso, createRegistroAcceso } from '../controllers/histori
 import { getHistoricoIOT, createRegistroHistoricoIOT } from '../controllers/historicoIOTController.js';
 import { getHorarios, getHorario, createHorario, updateHorario, deleteHorario } from '../controllers/horarioController.js';
 import { getHoras, getHora, createHora, updateHora, deleteHora } from '../controllers/horasController.js';
-import { getIoTDevices, getIoTDevice, createIoTDevice, updateIoTDevice, deleteIoTDevice } from '../controllers/iotController.js';
+import { getIoTDevices, getIoTDevice, createIoTDevice, updateIoTDevice, deleteIoTDevice, getIoTDeviceByMac } from '../controllers/iotController.js';
 import { getMarcas, getMarca, createMarca, updateMarca, deleteMarca, getMarcaByNombre } from '../controllers/marcaController.js';
 import { getPerfiles, getPerfil, createPerfil, updatePerfil, deletePerfil } from '../controllers/perfilController.js';
 import { getReportesUsuario, getReporteUsuario, createReporteUsuario, updateReporteUsuario, deleteReporteUsuario, getReportesPorAula } from '../controllers/reporteUsuarioController.js';
@@ -16,7 +16,7 @@ import { getTiposReporte, getTipoReporte, createTipoReporte, updateTipoReporte, 
 import { getTiposTrabajadores, getTipoTrabajador, createTipoTrabajador, updateTipoTrabajador, deleteTipoTrabajador } from '../controllers/tipoTrabajadorController.js';
 import { getTrabajadores, getTrabajador, createTrabajador, updateTrabajador, deleteTrabajador } from '../controllers/trabajadorController.js';
 import { getUbicacionesClimas, getUbicacionClima, createUbicacionClima, updateUbicacionClima, deleteUbicacionClima, getUbicacionesClimasPorAula } from '../controllers/ubicacionClimaController.js';
-import { getVinculacionesIot, getVinculacionIot, createVinculacionIot, updateVinculacionIot, deleteVinculacionIot } from '../controllers/vinculacionIotController.js';
+import { getVinculacionesIot, getVinculacionIot, createVinculacionIot, updateVinculacionIot, deleteVinculacionIot, getModuloIotById } from '../controllers/vinculacionIotController.js';
 
 const router = express.Router();
 
@@ -78,6 +78,7 @@ router.get('/iot/:Id_iot', getIoTDevice);
 router.post('/iot', createIoTDevice);
 router.put('/iot/:Id_iot', updateIoTDevice);
 router.delete('/iot/:Id_iot', deleteIoTDevice);
+router.get('/iot/mac/:mac', getIoTDeviceByMac);
 
 //MARCAS-------------------------------------------------------------------
 router.get('/marcas', getMarcas);
@@ -131,11 +132,12 @@ router.put('/ubicaciones-climas/:Id_ubicacion_Clima', updateUbicacionClima);
 router.delete('/ubicaciones-climas/:Id_ubicacion_Clima', deleteUbicacionClima);
 router.get('/ubicaciones_climas/aula/:idAula', getUbicacionesClimasPorAula);
 
-//VINCULACION IOT
+//VINCULACION IOT -------------------------------------------------------------------
 router.get('/vinculacion', getVinculacionesIot);
 router.get('/vinculacion/:Id_vinculacion', getVinculacionIot);
 router.post('/vinculacion', createVinculacionIot);
 router.put('/vinculacion/:Id_vinculacion', updateVinculacionIot);
 router.delete('/vinculacion/:Id_vinculacion', deleteVinculacionIot);
+router.get('/vinculacion/modulo/:id', getModuloIotById);
 
 export default router;
