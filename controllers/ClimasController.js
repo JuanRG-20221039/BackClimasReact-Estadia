@@ -79,3 +79,17 @@ export const getClimasPorMarca = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 };
+
+// Función para obtener un clima por el ID de vinculación
+export const getClimaByVinculacionId = async (req, res) => {
+    const { idVinculacion } = req.params;
+    try {
+        const clima = await Clima.findOne({ where: { Id_vinculacion_iot: idVinculacion } });
+        if (!clima) {
+            return res.status(404).json({ message: 'Clima no encontrado para el ID de vinculación especificado' });
+        }
+        res.json(clima);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};

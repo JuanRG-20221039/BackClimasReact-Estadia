@@ -84,3 +84,19 @@ export const getIoTDeviceByMac = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 };
+
+// Obtener la MAC de un dispositivo IoT por su ID
+export const getIoTDeviceMacById = async (req, res) => {
+    try {
+        const iotDevice = await IoT.findByPk(req.params.Id_iot, {
+            attributes: ['Mac_dispositivo']
+        });
+        if (iotDevice) {
+            res.json(iotDevice);
+        } else {
+            res.status(404).json({ message: 'Dispositivo IoT no encontrado' });
+        }
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};

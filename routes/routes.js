@@ -1,14 +1,14 @@
 import express from 'express';
 
 import { getAulas, crearAula, getAulaById, actualizarAula, eliminarAula, getAulasPorEdificio, getAulaPorNombreYEdificio } from '../controllers/aulasController.js';
-import { getClimas, getClimaById, createClima, updateClima, deleteClima, getClimasPorMarca } from '../controllers/climasController.js';
+import { getClimas, getClimaById, createClima, updateClima, deleteClima, getClimasPorMarca, getClimaByVinculacionId } from '../controllers/climasController.js';
 import { getDias, createDia, updateDia, deleteDia } from '../controllers/diasController.js';
 import { getEdificios, createEdificio, updateEdificio, deleteEdificio, getEdificioPorNombre  } from '../controllers/edificiosController.js';
 import { getHistorialAcceso, createRegistroAcceso } from '../controllers/historialAccesoController.js';
-import { getHistoricoIOT, createRegistroHistoricoIOT } from '../controllers/historicoIOTController.js';
+import { getHistoricoIOT, createRegistroHistoricoIOT, deleteRegistrosByVinculacionId } from '../controllers/historicoIOTController.js';
 import { getHorarios, getHorario, createHorario, updateHorario, deleteHorario } from '../controllers/horarioController.js';
 import { getHoras, getHora, createHora, updateHora, deleteHora } from '../controllers/horasController.js';
-import { getIoTDevices, getIoTDevice, createIoTDevice, updateIoTDevice, deleteIoTDevice, getIoTDeviceByMac } from '../controllers/iotController.js';
+import { getIoTDevices, getIoTDevice, createIoTDevice, updateIoTDevice, deleteIoTDevice, getIoTDeviceByMac, getIoTDeviceMacById } from '../controllers/iotController.js';
 import { getMarcas, getMarca, createMarca, updateMarca, deleteMarca, getMarcaByNombre } from '../controllers/marcaController.js';
 import { getPerfiles, getPerfil, createPerfil, updatePerfil, deletePerfil } from '../controllers/perfilController.js';
 import { getReportesUsuario, getReporteUsuario, createReporteUsuario, updateReporteUsuario, deleteReporteUsuario, getReportesPorAula } from '../controllers/reporteUsuarioController.js';
@@ -36,6 +36,7 @@ router.post('/climas', createClima);
 router.put('/climas/:id', updateClima);
 router.delete('/climas/:id', deleteClima);
 router.get('/climas/marca/:idMarca', getClimasPorMarca);
+router.get('/climas/vinculacion/:idVinculacion', getClimaByVinculacionId);
 
 //DIAS-------------------------------------------------------------------
 router.get('/dias', getDias);
@@ -57,6 +58,7 @@ router.post('/historial-acceso', createRegistroAcceso);
 //HISTORICO IOT -------------------------------------------------------------------
 router.get('/historico-iot', getHistoricoIOT);
 router.post('/historico-iot', createRegistroHistoricoIOT);
+router.delete('/historico/eliminar/:id', deleteRegistrosByVinculacionId);
 
 //HORARIOS-------------------------------------------------------------------
 router.get('/horarios', getHorarios);
@@ -79,6 +81,7 @@ router.post('/iot', createIoTDevice);
 router.put('/iot/:Id_iot', updateIoTDevice);
 router.delete('/iot/:Id_iot', deleteIoTDevice);
 router.get('/iot/mac/:mac', getIoTDeviceByMac);
+router.get('/iot/mac_id/:Id_iot', getIoTDeviceMacById);
 
 //MARCAS-------------------------------------------------------------------
 router.get('/marcas', getMarcas);
