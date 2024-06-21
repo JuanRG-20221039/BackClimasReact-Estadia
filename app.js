@@ -16,6 +16,7 @@ app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
 
+
 try{
     await db.authenticate()
     console.log('Conexion exitosa a la base de datos')

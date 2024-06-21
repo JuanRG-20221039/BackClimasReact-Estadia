@@ -75,7 +75,7 @@ export const eliminarAula = async (req, res) => {
   }
 };
 
-// Obtener todas las aulas de un edificio específico
+// Obtener todas las aulas por un ID de un edificio en específico
 export const getAulasPorEdificio = async (req, res) => {
   const { idEdificio } = req.params;
   try {

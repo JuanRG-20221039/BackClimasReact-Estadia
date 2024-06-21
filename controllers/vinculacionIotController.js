@@ -1,5 +1,6 @@
 // controllers/vinculacionIotController.js
 import VinculacionIot from '../models/model_vinculacion_iot.js';
+import Clima from '../models/model_climas.js';
 import { Op } from 'sequelize';
 
 // Obtener todas las vinculaciones
@@ -15,7 +16,7 @@ export const getVinculacionesIot = async (req, res) => {
 // Obtener una vinculacion por ID
 export const getVinculacionIot = async (req, res) => {
     try {
-        const vinculacion = await VinculacionIot.findByPk(req.params.Id_vinculacion);
+        const vinculacion = await VinculacionIot.findByPk(req.params.Id_vinculacion_iot);
         if (vinculacion) {
             res.json(vinculacion);
         } else {
@@ -40,10 +41,10 @@ export const createVinculacionIot = async (req, res) => {
 export const updateVinculacionIot = async (req, res) => {
     try {
         const [updated] = await VinculacionIot.update(req.body, {
-            where: { Id_vinculacion: req.params.Id_vinculacion }
+            where: { Id_vinculacion_iot: req.params.Id_vinculacion_iot }
         });
         if (updated) {
-            const updatedVinculacion = await VinculacionIot.findByPk(req.params.Id_vinculacion);
+            const updatedVinculacion = await VinculacionIot.findByPk(req.params.Id_vinculacion_iot);
             res.json(updatedVinculacion);
         } else {
             res.status(404).json({ message: 'Vinculacion no encontrada' });
@@ -57,7 +58,7 @@ export const updateVinculacionIot = async (req, res) => {
 export const deleteVinculacionIot = async (req, res) => {
     try {
         const deleted = await VinculacionIot.destroy({
-            where: { Id_vinculacion: req.params.Id_vinculacion }
+            where: { Id_vinculacion_iot: req.params.Id_vinculacion_iot }
         });
         if (deleted) {
             res.json({ message: 'Vinculacion eliminada correctamente' });
@@ -70,6 +71,7 @@ export const deleteVinculacionIot = async (req, res) => {
 };
 
 // Obtener un módulo IoT por su ID y determinar si es placa principal o secundaria
+//VALIDACION DE LA TABLA DE VINCULACIONES
 export const getModuloIotById = async (req, res) => {
     const { id } = req.params;
     try {

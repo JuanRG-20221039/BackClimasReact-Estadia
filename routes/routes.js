@@ -20,6 +20,9 @@ import { getVinculacionesIot, getVinculacionIot, createVinculacionIot, updateVin
 
 const router = express.Router();
 
+//NOTA - VERIFICAR QUE SIEMPRE SE NOMBREN LOS CAMPOS DEL BACK AL IGUAL QUE
+// EN LA PETICION DE LA URL: /vinculacion/:    >>>Id_vinculacion_iot<<<
+
 //AULAS-------------------------------------------------------------------
 router.get('/aulas', getAulas);
 router.post('/aulas', crearAula);
@@ -137,10 +140,10 @@ router.get('/ubicaciones_climas/aula/:idAula', getUbicacionesClimasPorAula);
 
 //VINCULACION IOT -------------------------------------------------------------------
 router.get('/vinculacion', getVinculacionesIot);
-router.get('/vinculacion/:Id_vinculacion', getVinculacionIot);
+router.get('/vinculacion/:Id_vinculacion_iot', getVinculacionIot);
 router.post('/vinculacion', createVinculacionIot);
-router.put('/vinculacion/:Id_vinculacion', updateVinculacionIot);
-router.delete('/vinculacion/:Id_vinculacion', deleteVinculacionIot);
+router.put('/vinculacion/:Id_vinculacion_iot', updateVinculacionIot);
+router.delete('/vinculacion/:Id_vinculacion_iot', deleteVinculacionIot);
 router.get('/vinculacion/modulo/:id', getModuloIotById);
 
 export default router;

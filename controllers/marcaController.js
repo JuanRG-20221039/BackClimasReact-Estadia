@@ -64,6 +64,7 @@ export const deleteMarca = async (req, res) => {
 };
 
 // Obtener una marca por su nombre
+//(Es una validacion para no diplicar registros de una marca)
 export const getMarcaByNombre = async (req, res) => {
     const { nombre } = req.params;
     try {
