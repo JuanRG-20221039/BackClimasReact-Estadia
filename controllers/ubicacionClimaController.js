@@ -73,3 +73,19 @@ export const getUbicacionesClimasPorAula = async (req, res) => {
         res.status(500).json({ message: 'Error interno del servidor' });
     }
 };
+
+// Función para obtener una ubicación de clima por ID de clima
+export const getUbicacionClimaPorIdClima = async (req, res) => {
+    const { idClima } = req.params;
+    try {
+        const ubicacionClima = await UbicacionClima.findOne({ where: { Id_clima: idClima } });
+        if (!ubicacionClima) {
+            res.status(404).json({ message: 'No se encontró ninguna ubicación de clima para el ID de clima especificado' });
+        } else {
+            res.json(ubicacionClima);
+        }
+    } catch (error) {
+        console.error('Error al obtener la ubicación de clima por ID de clima:', error);
+        res.status(500).json({ message: 'Error interno del servidor' });
+    }
+};
