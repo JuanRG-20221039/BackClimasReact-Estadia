@@ -14,7 +14,7 @@ import { getPerfiles, getPerfil, createPerfil, updatePerfil, deletePerfil } from
 import { getReportesUsuario, getReporteUsuario, createReporteUsuario, updateReporteUsuario, deleteReporteUsuario, getReportesPorAula } from '../controllers/reporteUsuarioController.js';
 import { getTiposReporte, getTipoReporte, createTipoReporte, updateTipoReporte, deleteTipoReporte } from '../controllers/tipoReporteController.js';
 import { getTiposTrabajadores, getTipoTrabajador, createTipoTrabajador, updateTipoTrabajador, deleteTipoTrabajador } from '../controllers/tipoTrabajadorController.js';
-import { getTrabajadores, getTrabajador, createTrabajador, updateTrabajador, deleteTrabajador } from '../controllers/trabajadorController.js';
+import { getTrabajadores, getTrabajador, createTrabajador, updateTrabajador, deleteTrabajador, iniciarSesion, obtenerTrabajadorPorClave } from '../controllers/trabajadorController.js';
 import { getUbicacionesClimas, getUbicacionClima, createUbicacionClima, updateUbicacionClima, deleteUbicacionClima, getUbicacionesClimasPorAula } from '../controllers/ubicacionClimaController.js';
 import { getVinculacionesIot, getVinculacionIot, createVinculacionIot, updateVinculacionIot, deleteVinculacionIot, getModuloIotById } from '../controllers/vinculacionIotController.js';
 
@@ -80,7 +80,7 @@ router.delete('/horas/:Id_horas', deleteHora);
 //IOT -------------------------------------------------------------------
 router.get('/iot', getIoTDevices);
 router.get('/iot/:Id_iot', getIoTDevice);
-router.post('/iot', createIoTDevice);
+router.post('/iot', createIoTDevice); 
 router.put('/iot/:Id_iot', updateIoTDevice);
 router.delete('/iot/:Id_iot', deleteIoTDevice);
 router.get('/iot/mac/:mac', getIoTDeviceByMac);
@@ -129,6 +129,9 @@ router.get('/trabajadores/:Id_clave_trabajador', getTrabajador);
 router.post('/trabajadores', createTrabajador);
 router.put('/trabajadores/:Id_clave_trabajador', updateTrabajador);
 router.delete('/trabajadores/:Id_clave_trabajador', deleteTrabajador);
+//IMPLEMENTACION - RN
+router.get('/trabajadores/login', iniciarSesion);
+router.get('/trabajadores/clave/:Clave_trabajador', obtenerTrabajadorPorClave);
 
 //UBICACIONES CLIMAS -------------------------------------------------------------------
 router.get('/ubicaciones-climas', getUbicacionesClimas);

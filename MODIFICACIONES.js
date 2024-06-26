@@ -1,25 +1,55 @@
 // COMENTARIOS PARA AGREGAR O IMPLEMENTAR CODIGO:
+// >>> IGNORAR LOS ERRORES
 
-// >>> IGNORA LOS ERRORES
 
-EJEMPLO:
-// >>>IMPLEMENTAR EN CONTROLADOR DE AULAS
-// Obtener todas las aulas por un ID de un edificio en específico
-export const getAulasPorEdificio = async (req, res) => {
-  const { idEdificio } = req.params;
+
+
+/*  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  */
+//                  >>> [✔✔] <<< YA IMPLEMENTADO
+/*  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  */
+
+
+
+
+// >>>IMPLEMENTAR EN CONTROLADOR DE Trabajador [✔✔]
+//Es para iniciar sesion con la clave del trabajador 
+export const iniciarSesion = async (req, res) => {
+  const { Clave_trabajador, Contraseña } = req.body;
+
   try {
-    const aulas = await Aula.findAll({ where: { Id_edificio: idEdificio } });
-    if (aulas.length === 0) {
-      res.status(404).json({ error: 'No se encontraron aulas para el edificio especificado' });
+    const trabajador = await Trabajador.findOne({
+      where: {
+        Clave_trabajador,
+        Contraseña,
+      },
+    });
+
+    if (trabajador) {
+      res.json({ message: 'Autenticación exitosa' });
     } else {
-      res.json(aulas);
+      res.status(401).json({ message: 'Nombre de usuario o contraseña incorrectos' });
     }
   } catch (error) {
-    console.error('Error al obtener las aulas por edificio:', error);
-    res.status(500).json({ error: 'Error interno del servidor' });
+    res.json({ message: error.message });
   }
 };
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-//Es para cambiar el estado de la 
+// >>>IMPLEMENTAR EN CONTROLADOR DE Trabajador [✔✔]
+//es para buscar a un trabajador por medio de la clave 
+export const obtenerTrabajadorPorClave = async (req, res) => {
+  const { Clave_trabajador } = req.params;
 
+  try {
+    const trabajador = await Trabajador.findOne({
+      where: { Clave_trabajador }
+    });
+
+    if (trabajador) {
+      res.json(trabajador);
+    } else {
+      res.status(404).json({ message: `No se encontró ningún trabajador con la Clave trabajador ${Clave_trabajador}` });
+    }
+  } catch (error) {
+    res.json({ message: error.message });
+  }
+};
