@@ -59,7 +59,7 @@ export const deleteTrabajador = async (req, res) => {
 };
 
 //Es para iniciar sesion con la clave del trabajador 
-export const iniciarSesion = async (req, res) => {
+export const iniciarSesionConClave = async (req, res) => {
     const { Clave_trabajador, Contraseña } = req.body;
     try {
         const trabajador = await Trabajador.findOne({
@@ -95,3 +95,41 @@ export const obtenerTrabajadorPorClave = async (req, res) => {
         res.json({ message: error.message });
     }
 };  
+
+// Función para iniciar sesión con el correo electrónico del trabajador
+export const iniciarSesionConCorreo = async (req, res) => {
+    const { Correo, Contraseña } = req.body;
+    try {
+        const trabajador = await Trabajador.findOne({
+            where: {
+                Correo,
+                Contraseña,
+            },
+        });
+        if (trabajador) {
+            res.json({ message: 'Autenticación exitosa', Id_perfil: trabajador.Id_perfil });
+        } else {
+            res.status(401).json({ message: 'Correo o contraseña incorrectos' });
+        }
+    } catch (error) {
+        res.json({ message: error.message });
+    }
+};
+
+// Función para obtener un trabajador por correo electrónico
+export const getTrabajadorPorCorreo = async (req, res) => {
+    const { correo } = req.params;
+    try {
+        const trabajador = await Trabajador.findOne({
+            where: { Correo: correo }
+        });
+
+        if (trabajador) {
+            res.json(trabajador);
+        } else {
+            res.status(404).json({ message: `No se encontró ningún trabajador con el correo electrónico ${correo}` });
+        }
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};

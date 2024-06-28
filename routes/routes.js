@@ -14,7 +14,7 @@ import { getPerfiles, getPerfil, createPerfil, updatePerfil, deletePerfil } from
 import { getReportesUsuario, getReporteUsuario, createReporteUsuario, updateReporteUsuario, deleteReporteUsuario, getReportesPorAula } from '../controllers/reporteUsuarioController.js';
 import { getTiposReporte, getTipoReporte, createTipoReporte, updateTipoReporte, deleteTipoReporte } from '../controllers/tipoReporteController.js';
 import { getTiposTrabajadores, getTipoTrabajador, createTipoTrabajador, updateTipoTrabajador, deleteTipoTrabajador } from '../controllers/tipoTrabajadorController.js';
-import { getTrabajadores, getTrabajador, createTrabajador, updateTrabajador, deleteTrabajador, iniciarSesion, obtenerTrabajadorPorClave } from '../controllers/trabajadorController.js';
+import { getTrabajadores, getTrabajador, createTrabajador, updateTrabajador, deleteTrabajador, obtenerTrabajadorPorClave, getTrabajadorPorCorreo, iniciarSesionConClave, iniciarSesionConCorreo } from '../controllers/trabajadorController.js';
 import { getUbicacionesClimas, getUbicacionClima, createUbicacionClima, updateUbicacionClima, deleteUbicacionClima, getUbicacionesClimasPorAula, getUbicacionClimaPorIdClima } from '../controllers/ubicacionClimaController.js';
 import { getVinculacionesIot, getVinculacionIot, createVinculacionIot, updateVinculacionIot, deleteVinculacionIot, getModuloIotById } from '../controllers/vinculacionIotController.js';
 
@@ -129,8 +129,9 @@ router.get('/trabajadores/:Id_clave_trabajador', getTrabajador);
 router.post('/trabajadores', createTrabajador);
 router.put('/trabajadores/:Id_clave_trabajador', updateTrabajador);
 router.delete('/trabajadores/:Id_clave_trabajador', deleteTrabajador);
-//IMPLEMENTACION - RN
-router.get('/trabajadores/login', iniciarSesion);
+router.get('/trabajadores/correo/:correo', getTrabajadorPorCorreo);
+router.get('/trabajadores/loginClave', iniciarSesionConClave); //para iniciar sesion el la movil
+router.post('/trabajadores/loginCorreo', iniciarSesionConCorreo); //para iniciar sesion en la web
 router.get('/trabajadores/clave/:Clave_trabajador', obtenerTrabajadorPorClave);
 
 //UBICACIONES CLIMAS -------------------------------------------------------------------
