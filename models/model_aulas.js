@@ -16,6 +16,10 @@ const Aula = db.define('tbl_aulas', {
   Id_edificio: {
     type: DataTypes.INTEGER,
     allowNull: false
+  },
+  Id_tipo_aula: {
+    type: DataTypes.INTEGER,
+    allowNull: false
   }
 }, {
   timestamps: false

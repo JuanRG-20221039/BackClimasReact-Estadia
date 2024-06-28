@@ -1,6 +1,6 @@
 import express from 'express';
 
-import { getAulas, crearAula, getAulaById, actualizarAula, eliminarAula, getAulasPorEdificio, getAulaPorNombreYEdificio } from '../controllers/aulasController.js';
+import { getAulas, crearAula, getAulaById, actualizarAula, eliminarAula, getAulasPorEdificio, getAulaPorNombreEdificioTipo, getAulaPorNombreYEdificio } from '../controllers/aulasController.js';
 import { getClimas, getClimaById, createClima, updateClima, deleteClima, getClimasPorMarca, getClimaByVinculacionId } from '../controllers/climasController.js';
 import { getDias, createDia, updateDia, deleteDia } from '../controllers/diasController.js';
 import { getEdificios, createEdificio, updateEdificio, deleteEdificio, getEdificioPorNombre  } from '../controllers/edificiosController.js';
@@ -17,6 +17,7 @@ import { getTiposTrabajadores, getTipoTrabajador, createTipoTrabajador, updateTi
 import { getTrabajadores, getTrabajador, createTrabajador, updateTrabajador, deleteTrabajador, obtenerTrabajadorPorClave, getTrabajadorPorCorreo, iniciarSesionConClave, iniciarSesionConCorreo } from '../controllers/trabajadorController.js';
 import { getUbicacionesClimas, getUbicacionClima, createUbicacionClima, updateUbicacionClima, deleteUbicacionClima, getUbicacionesClimasPorAula, getUbicacionClimaPorIdClima } from '../controllers/ubicacionClimaController.js';
 import { getVinculacionesIot, getVinculacionIot, createVinculacionIot, updateVinculacionIot, deleteVinculacionIot, getModuloIotById } from '../controllers/vinculacionIotController.js';
+import { createTipoAula, deleteTipoAula, getTipoAulaById, getTiposAula, updateTipoAula } from '../controllers/tiposAulasController.js';
 
 const router = express.Router();
 
@@ -31,6 +32,14 @@ router.put('/aulas/:id', actualizarAula);
 router.delete('/aulas/:id', eliminarAula);
 router.get('/aulas/edificio/:idEdificio', getAulasPorEdificio);
 router.get('/aulas/nombre/:nombreAula/edificio/:idEdificio', getAulaPorNombreYEdificio);
+router.get('/aulas/nombre/:nombreAula/edificio/:idEdificio/tipo/:idTipo', getAulaPorNombreEdificioTipo);
+
+//TIPOS AULA-------------------------------------------------------------------
+router.get('/tipos-aula', getTiposAula);
+router.get('/tipos-aula/:Id_tipo_aula', getTipoAulaById);
+router.post('/tipos-aula', createTipoAula);
+router.put('/tipos-aula/:Id_tipo_aula', updateTipoAula);
+router.delete('/tipos-aula/:Id_tipo_aula', deleteTipoAula);
 
 //CLIMAS-------------------------------------------------------------------
 router.get('/climas', getClimas);

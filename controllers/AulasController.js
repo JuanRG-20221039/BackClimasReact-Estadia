@@ -14,9 +14,9 @@ export const getAulas = async (req, res) => {
 
 // Crear una nueva aula
 export const crearAula = async (req, res) => {
-  const { Nombre_aula, Id_edificio } = req.body;
+  const { Nombre_aula, Id_edificio, Id_tipo_aula } = req.body;
   try {
-    const nuevaAula = await Aula.create({ Nombre_aula, Id_edificio });
+    const nuevaAula = await Aula.create({ Nombre_aula, Id_edificio, Id_tipo_aula });
     res.status(201).json(nuevaAula);
   } catch (error) {
     console.error('Error al crear el aula:', error);
@@ -43,13 +43,13 @@ export const getAulaById = async (req, res) => {
 // Actualizar un aula por su ID
 export const actualizarAula = async (req, res) => {
   const { id } = req.params;
-  const { Nombre_aula, Id_edificio } = req.body;
+  const { Nombre_aula, Id_edificio, Id_tipo_aula } = req.body;
   try {
     const aula = await Aula.findByPk(id);
     if (!aula) {
       res.status(404).json({ error: 'Aula no encontrada' });
     } else {
-      await aula.update({ Nombre_aula, Id_edificio });
+      await aula.update({ Nombre_aula, Id_edificio, Id_tipo_aula });
       res.json(aula);
     }
   } catch (error) {
@@ -91,7 +91,32 @@ export const getAulasPorEdificio = async (req, res) => {
   }
 };
 
-// Obtener un aula por su nombre y el edificio donde se encuentra
+// Obtener un aula por su nombre el edificio y el tipo
+export const getAulaPorNombreEdificioTipo = async (req, res) => {
+  const { nombreAula, idEdificio, idTipo } = req.params;
+  try {
+    const aula = await Aula.findOne({
+      where: { Nombre_aula: nombreAula, Id_edificio: idEdificio, Id_tipo_aula: idTipo },
+      include: [
+        {
+          model: Edificio,
+          as: 'edificio',
+          attributes: ['Nombre_edificio']
+        }
+      ]
+    });
+    if (!aula) {
+      res.status(404).json({ error: 'Aula no encontrada' });
+    } else {
+      res.json(aula);
+    }
+  } catch (error) {
+    console.error('Error al obtener el aula por nombre y edificio:', error);
+    res.status(500).json({ error: 'Error interno del servidor' });
+  }
+};
+
+// Obtener un aula por su nombre y el edificio
 export const getAulaPorNombreYEdificio = async (req, res) => {
   const { nombreAula, idEdificio } = req.params;
   try {
