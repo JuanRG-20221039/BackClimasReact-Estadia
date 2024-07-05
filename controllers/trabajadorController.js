@@ -11,7 +11,7 @@ export const getTrabajadores = async (req, res) => {
 };
 
 // Obtener un trabajador por ID
-export const getTrabajador = async (req, res) => {
+export const getTrabajadorPorId = async (req, res) => {
     try {
         const trabajador = await Trabajador.findByPk(req.params.Id_clave_trabajador);
         res.json(trabajador);

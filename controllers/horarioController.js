@@ -57,3 +57,19 @@ export const deleteHorario = async (req, res) => {
         res.json({ message: error.message });
     }
 };
+
+// Obtener todos los horarios de un Id_aula específico
+export const getHorariosPorAula = async (req, res) => {
+    const { idAula } = req.params;
+    try {
+        const horarios = await Horario.findAll({ where: { Id_aula: idAula } });
+        if (horarios.length === 0) {
+            res.status(404).json({ message: 'No se encontraron horarios para el aula especificada' });
+        } else {
+            res.json(horarios);
+        }
+    } catch (error) {
+        console.error('Error al obtener los horarios por aula:', error);
+        res.status(500).json({ message: 'Error interno del servidor' });
+    }
+};

@@ -6,7 +6,7 @@ import { getDias, createDia, updateDia, deleteDia } from '../controllers/diasCon
 import { getEdificios, createEdificio, updateEdificio, deleteEdificio, getEdificioPorNombre  } from '../controllers/edificiosController.js';
 import { getHistorialAcceso, createRegistroAcceso } from '../controllers/historialAccesoController.js';
 import { getHistoricoIOT, createRegistroHistoricoIOT, deleteRegistrosByVinculacionId } from '../controllers/historicoIOTController.js';
-import { getHorarios, getHorario, createHorario, updateHorario, deleteHorario } from '../controllers/horarioController.js';
+import { getHorarios, getHorario, createHorario, updateHorario, deleteHorario, getHorariosPorAula } from '../controllers/horarioController.js';
 import { getHoras, getHora, createHora, updateHora, deleteHora } from '../controllers/horasController.js';
 import { getIoTDevices, getIoTDevice, createIoTDevice, updateIoTDevice, deleteIoTDevice, getIoTDeviceByMac, getIoTDeviceMacById } from '../controllers/iotController.js';
 import { getMarcas, getMarca, createMarca, updateMarca, deleteMarca, getMarcaByNombre } from '../controllers/marcaController.js';
@@ -14,7 +14,7 @@ import { getPerfiles, getPerfil, createPerfil, updatePerfil, deletePerfil } from
 import { getReportesUsuario, getReporteUsuario, createReporteUsuario, updateReporteUsuario, deleteReporteUsuario, getReportesPorAula } from '../controllers/reporteUsuarioController.js';
 import { getTiposReporte, getTipoReporte, createTipoReporte, updateTipoReporte, deleteTipoReporte } from '../controllers/tipoReporteController.js';
 import { getTiposTrabajadores, getTipoTrabajador, createTipoTrabajador, updateTipoTrabajador, deleteTipoTrabajador } from '../controllers/tipoTrabajadorController.js';
-import { getTrabajadores, getTrabajador, createTrabajador, updateTrabajador, deleteTrabajador, obtenerTrabajadorPorClave, getTrabajadorPorCorreo, iniciarSesionConClave, iniciarSesionConCorreo } from '../controllers/trabajadorController.js';
+import { getTrabajadores, createTrabajador, updateTrabajador, deleteTrabajador, obtenerTrabajadorPorClave, getTrabajadorPorCorreo, iniciarSesionConClave, iniciarSesionConCorreo, getTrabajadorPorId } from '../controllers/trabajadorController.js';
 import { getUbicacionesClimas, getUbicacionClima, createUbicacionClima, updateUbicacionClima, deleteUbicacionClima, getUbicacionesClimasPorAula, getUbicacionClimaPorIdClima } from '../controllers/ubicacionClimaController.js';
 import { getVinculacionesIot, getVinculacionIot, createVinculacionIot, updateVinculacionIot, deleteVinculacionIot, getModuloIotById } from '../controllers/vinculacionIotController.js';
 import { createTipoAula, deleteTipoAula, getTipoAulaById, getTiposAula, updateTipoAula } from '../controllers/tiposAulasController.js';
@@ -78,6 +78,7 @@ router.get('/horarios/:Id_horario', getHorario);
 router.post('/horarios', createHorario);
 router.put('/horarios/:Id_horario', updateHorario);
 router.delete('/horarios/:Id_horario', deleteHorario);
+router.get('/horarios/aula/:idAula', getHorariosPorAula);
 
 //HORAS-------------------------------------------------------------------
 router.get('/horas', getHoras);
@@ -134,7 +135,7 @@ router.delete('/tiposTrabajadores/:Id_tipo_de_trabajador', deleteTipoTrabajador)
 
 //TRABAJADORES -------------------------------------------------------------------
 router.get('/trabajadores', getTrabajadores);
-router.get('/trabajadores/:Id_clave_trabajador', getTrabajador);
+router.get('/trabajadores/:Id_clave_trabajador', getTrabajadorPorId);
 router.post('/trabajadores', createTrabajador);
 router.put('/trabajadores/:Id_clave_trabajador', updateTrabajador);
 router.delete('/trabajadores/:Id_clave_trabajador', deleteTrabajador);
@@ -158,6 +159,6 @@ router.get('/vinculacion/:Id_vinculacion_iot', getVinculacionIot);
 router.post('/vinculacion', createVinculacionIot);
 router.put('/vinculacion/:Id_vinculacion_iot', updateVinculacionIot);
 router.delete('/vinculacion/:Id_vinculacion_iot', deleteVinculacionIot);
-router.get('/vinculacion/modulo/:id', getModuloIotById);
+router.get('/vinculacion/modulo/:id', getModuloIotById); //Id del iot
 
 export default router;

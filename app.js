@@ -1,25 +1,26 @@
 import rutas from './routes/routes.js';
 import express from 'express';
-import cors from 'cors'
+import cors from 'cors';
 
-//importamos la conexion a la base de datos
+// Importamos la conexion a la base de datos
 import db from './database/db.js';
 
 const app = express();
 const PORT = 8000;
+const HOST = '0.0.0.0'; // Escuchar en todas las interfaces de red
+const IP = '172.31.99.82'; // Tu dirección IP local
 
-app.use(cors())
-app.use(express.json())
+app.use(cors());
+app.use(express.json());
 app.use('/', rutas);
 
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
+app.listen(PORT, HOST, () => {
+    console.log(`Server is running on http://localhost:${PORT} and on the network at http://${IP}:${PORT}`);
 });
 
-
-try{
-    await db.authenticate()
-    console.log('Conexion exitosa a la base de datos')
-}   catch(error){
-    console.log(`El error de la conexion es: ${error}`)
+try {
+    await db.authenticate();
+    console.log('Conexion exitosa a la base de datos');
+} catch (error) {
+    console.log(`El error de la conexion es: ${error}`);
 }
