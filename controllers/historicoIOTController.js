@@ -15,9 +15,9 @@ export const getHistoricoIOT = async (req, res) => {
 
 // Crear un registro en el historial
 export const createRegistroHistoricoIOT = async (req, res) => {
-    const { Id_vinculacion_iot, Presencia_personas, Humedad_value, Temperatura_value, Estado_clima, Fecha_hora } = req.body;
+    const { Id_vinculacion_iot, Presencia_personas, Humedad_value, Temperatura_value, Estado_clima } = req.body;
     try {
-        const nuevoRegistro = await HistoricoIOT.create({ Id_vinculacion_iot, Presencia_personas, Humedad_value, Temperatura_value, Estado_clima, Fecha_hora });
+        const nuevoRegistro = await HistoricoIOT.create({ Id_vinculacion_iot, Presencia_personas, Humedad_value, Temperatura_value, Estado_clima });
         res.status(201).json(nuevoRegistro);
     } catch (error) {
         console.error('Error al crear un nuevo registro en el historico de dispositivos IOT:', error);

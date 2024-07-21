@@ -18,6 +18,7 @@ import { getTrabajadores, createTrabajador, updateTrabajador, deleteTrabajador, 
 import { getUbicacionesClimas, getUbicacionClima, createUbicacionClima, updateUbicacionClima, deleteUbicacionClima, getUbicacionesClimasPorAula, getUbicacionClimaPorIdClima } from '../controllers/ubicacionClimaController.js';
 import { getVinculacionesIot, getVinculacionIot, createVinculacionIot, updateVinculacionIot, deleteVinculacionIot, getModuloIotById } from '../controllers/vinculacionIotController.js';
 import { createTipoAula, deleteTipoAula, getTipoAulaById, getTiposAula, updateTipoAula } from '../controllers/tiposAulasController.js';
+import { getCodigosClima, getCodigoClima, createCodigoClima, updateCodigoClima, deleteCodigoClima } from '../controllers/codigosClimasController.js';
 
 const router = express.Router();
 
@@ -160,5 +161,12 @@ router.post('/vinculacion', createVinculacionIot);
 router.put('/vinculacion/:Id_vinculacion_iot', updateVinculacionIot);
 router.delete('/vinculacion/:Id_vinculacion_iot', deleteVinculacionIot);
 router.get('/vinculacion/modulo/:id', getModuloIotById); //Id del iot
+
+// CODIGOS CLIMAS -------------------------------------------------------------------
+router.get('/codigosClima', getCodigosClima);
+router.get('/codigosClima/:Id_codigo', getCodigoClima);
+router.post('/codigosClima', createCodigoClima);
+router.put('/codigosClima/:Id_codigo', updateCodigoClima);
+router.delete('/codigosClima/:Id_codigo', deleteCodigoClima);
 
 export default router;

@@ -33,7 +33,12 @@ const HistoricoIOT = db.define('tbl_historico_iot', {
     }
 }, {
     tableName: 'tbl_historico_iot',
-    timestamps: false // Desactiva las columnas createdAt y updatedAt
+    timestamps: false, // Desactiva las columnas createdAt y updatedAt
+    hooks: {
+        beforeCreate: (historico) => {
+            historico.Fecha_hora = new Date();
+        }
+    }
 });
 
 export default HistoricoIOT;
