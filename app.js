@@ -8,7 +8,7 @@ import db from './database/db.js';
 const app = express();
 const PORT = 8000;
 const HOST = '0.0.0.0'; // Escuchar en todas las interfaces de red
-const IP = '192.168.74.5'; // Tu dirección IP local
+const IP = '172.31.99.83'; // Tu dirección IP local
 
 app.use(cors());
 app.use(express.json());
@@ -20,7 +20,7 @@ app.listen(PORT, HOST, () => {
 
 try {
     await db.authenticate();
-    console.log('Conexion exitosa a la base de datos');
+    console.log('Conexion exitosa a la base de datos ✔ ✔ ✔');
 } catch (error) {
     console.log(`El error de la conexion es: ${error}`);
 }

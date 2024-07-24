@@ -20,6 +20,8 @@ import { getVinculacionesIot, getVinculacionIot, createVinculacionIot, updateVin
 import { createTipoAula, deleteTipoAula, getTipoAulaById, getTiposAula, updateTipoAula } from '../controllers/tiposAulasController.js';
 import { getCodigosClima, getCodigoClima, createCodigoClima, updateCodigoClima, deleteCodigoClima } from '../controllers/codigosClimasController.js';
 import { createPermiso, deletePermiso, deletePermisosPorTrabajador, getPermiso, getPermisoPorTrabajadorYClima, getPermisos, getPermisosPorTrabajador, updatePermiso } from '../controllers/permisosController.js';
+import { createPregunta, deletePregunta, getPreguntaById, getPreguntas, updatePregunta } from '../controllers/preguntasController.js';
+import { createRespuesta, deleteRespuesta, getRespuestaById, getRespuestas, getRespuestasByTrabajadorId, updateRespuesta } from '../controllers/respuestasController.js';
 
 const router = express.Router();
 
@@ -194,5 +196,19 @@ router.get('/permisos/trabajador/:Id_clave_trabajador', getPermisosPorTrabajador
 router.get('/permisos/trabajador/:id_clave_trabajador/clima/:id_clima', getPermisoPorTrabajadorYClima);
 router.delete('/permisos/trabajador/:id_clave_trabajador', deletePermisosPorTrabajador);
 
+//PREGUNTAS ------------------------------------------------------------------------------
+router.get('/preguntas', getPreguntas);
+router.get('/preguntas/:id', getPreguntaById);
+router.post('/preguntas', createPregunta);
+router.put('/preguntas/:id', updatePregunta);
+router.delete('/preguntas/:id', deletePregunta);
+
+//RESPUESTAS ---------------------------------------------------------------------------------
+router.get('/respuestas', getRespuestas);
+router.get('/respuestas/:id', getRespuestaById);
+router.post('/respuestas', createRespuesta);
+router.put('/respuestas/:id', updateRespuesta);
+router.delete('/respuestas/:id', deleteRespuesta);
+router.get('/respuestas/trabajador/:id_clave_trabajador', getRespuestasByTrabajadorId);
 
 export default router;
