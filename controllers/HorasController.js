@@ -57,3 +57,37 @@ export const deleteHora = async (req, res) => {
         res.json({ message: error.message });
     }
 };
+
+// Obtener una hora por ID
+export const getHoraByID = async (req, res) => {
+    try {
+        const hora = await Horas.findByPk(req.params.Id_horas);
+        if (hora) {
+            res.json(hora);
+        } else {
+            res.status(404).json({ message: 'Hora no encontrada' });
+        }
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+// Obtener una hora por el campo Horas
+export const getHoraPorHoras = async (req, res) => {
+    const { horas } = req.params;
+    try {
+        const hora = await Horas.findOne({
+            where: {
+                Horas: horas
+            }
+        });
+        if (!hora) {
+            res.status(404).json({ message: 'Hora no encontrada' });
+        } else {
+            res.json(hora);
+        }
+    } catch (error) {
+        console.error('Error al obtener la hora por el campo Horas:', error);
+        res.status(500).json({ message: 'Error interno del servidor' });
+    }
+};

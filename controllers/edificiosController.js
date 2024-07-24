@@ -11,6 +11,22 @@ export const getEdificios = async (req, res) => {
     }
 };
 
+// Obtener un edificio por su ID
+export const getEdificioPorId = async (req, res) => {
+    const id = req.params.id;
+    try {
+        const edificio = await Edificio.findByPk(id);
+        if (!edificio) {
+            res.status(404).json({ message: 'Edificio no encontrado' });
+        } else {
+            res.json(edificio);
+        }
+    } catch (error) {
+        console.error('Error al obtener el edificio por ID:', error);
+        res.status(500).json({ message: 'Error al obtener el edificio' });
+    }
+};
+
 // Crear un nuevo edificio
 export const createEdificio = async (req, res) => {
     const { Nombre_edificio, Imagen } = req.body;

@@ -73,3 +73,25 @@ export const getHorariosPorAula = async (req, res) => {
         res.status(500).json({ message: 'Error interno del servidor' });
     }
 };
+
+// Obtener un horario por Id_aula, Id_Horas e Id_Dia
+export const getHorarioPorAulaYHorasYDia = async (req, res) => {
+    const { idAula, idHoras, idDia } = req.params;
+    try {
+        const horario = await Horario.findOne({
+            where: {
+                Id_aula: idAula,
+                Id_Horas: idHoras,
+                Id_Dia: idDia
+            }
+        });
+        if (!horario) {
+            res.status(404).json({ message: 'No se encontró el horario con los parámetros proporcionados' });
+        } else {
+            res.json(horario);
+        }
+    } catch (error) {
+        console.error('Error al obtener el horario por aula, horas y día:', error);
+        res.status(500).json({ message: 'Error interno del servidor' });
+    }
+};

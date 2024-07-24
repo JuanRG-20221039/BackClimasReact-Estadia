@@ -49,3 +49,19 @@ export const deleteDia = async (req, res) => {
         res.status(500).json({ message: 'Error al eliminar el día' });
     }
 };
+
+// Obtener un día por ID
+export const getDiaById = async (req, res) => {
+    const id = req.params.id;
+    try {
+        const dia = await Dia.findOne({ where: { Id_dias: id } });
+        if (dia) {
+            res.json(dia);
+        } else {
+            res.status(404).json({ message: 'Día no encontrado' });
+        }
+    } catch (error) {
+        console.error('Error al obtener el día:', error);
+        res.status(500).json({ message: 'Error al obtener el día' });
+    }
+};

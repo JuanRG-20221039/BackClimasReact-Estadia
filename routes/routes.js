@@ -2,12 +2,12 @@ import express from 'express';
 
 import { getAulas, crearAula, getAulaById, actualizarAula, eliminarAula, getAulasPorEdificio, getAulaPorNombreEdificioTipo, getAulaPorNombreYEdificio } from '../controllers/aulasController.js';
 import { getClimas, getClimaById, createClima, updateClima, deleteClima, getClimasPorMarca, getClimaByVinculacionId } from '../controllers/climasController.js';
-import { getDias, createDia, updateDia, deleteDia } from '../controllers/diasController.js';
-import { getEdificios, createEdificio, updateEdificio, deleteEdificio, getEdificioPorNombre  } from '../controllers/edificiosController.js';
+import { getDias, createDia, updateDia, deleteDia, getDiaById } from '../controllers/diasController.js';
+import { getEdificios, createEdificio, updateEdificio, deleteEdificio, getEdificioPorNombre, getEdificioPorId  } from '../controllers/edificiosController.js';
 import { getHistorialAcceso, createRegistroAcceso } from '../controllers/historialAccesoController.js';
 import { getHistoricoIOT, createRegistroHistoricoIOT, deleteRegistrosByVinculacionId } from '../controllers/historicoIOTController.js';
-import { getHorarios, getHorario, createHorario, updateHorario, deleteHorario, getHorariosPorAula } from '../controllers/horarioController.js';
-import { getHoras, getHora, createHora, updateHora, deleteHora } from '../controllers/horasController.js';
+import { getHorarios, getHorario, createHorario, updateHorario, deleteHorario, getHorariosPorAula, getHorarioPorAulaYHorasYDia } from '../controllers/horarioController.js';
+import { getHoras, getHora, createHora, updateHora, deleteHora, getHoraByID, getHoraPorHoras } from '../controllers/horasController.js';
 import { getIoTDevices, getIoTDevice, createIoTDevice, updateIoTDevice, deleteIoTDevice, getIoTDeviceByMac, getIoTDeviceMacById } from '../controllers/iotController.js';
 import { getMarcas, getMarca, createMarca, updateMarca, deleteMarca, getMarcaByNombre } from '../controllers/marcaController.js';
 import { getPerfiles, getPerfil, createPerfil, updatePerfil, deletePerfil } from '../controllers/perfilController.js';
@@ -19,6 +19,7 @@ import { getUbicacionesClimas, getUbicacionClima, createUbicacionClima, updateUb
 import { getVinculacionesIot, getVinculacionIot, createVinculacionIot, updateVinculacionIot, deleteVinculacionIot, getModuloIotById } from '../controllers/vinculacionIotController.js';
 import { createTipoAula, deleteTipoAula, getTipoAulaById, getTiposAula, updateTipoAula } from '../controllers/tiposAulasController.js';
 import { getCodigosClima, getCodigoClima, createCodigoClima, updateCodigoClima, deleteCodigoClima } from '../controllers/codigosClimasController.js';
+import { createPermiso, deletePermiso, deletePermisosPorTrabajador, getPermiso, getPermisoPorTrabajadorYClima, getPermisos, getPermisosPorTrabajador, updatePermiso } from '../controllers/permisosController.js';
 
 const router = express.Router();
 
@@ -57,9 +58,13 @@ router.post('/dias', createDia);
 router.put('/dias/:id', updateDia);
 router.delete('/dias/:id', deleteDia);
 
+// Obtener un día por ID
+router.get('/dias/:id', getDiaById);
+
 //EDIFICIOS-------------------------------------------------------------------
 router.get('/edificios', getEdificios);
 router.post('/edificios', createEdificio);
+router.get('/edificios/:id',getEdificioPorId);
 router.put('/edificios/:id', updateEdificio);
 router.delete('/edificios/:id', deleteEdificio);
 router.get('/edificios/nombre/:nombre', getEdificioPorNombre);
@@ -81,12 +86,20 @@ router.put('/horarios/:Id_horario', updateHorario);
 router.delete('/horarios/:Id_horario', deleteHorario);
 router.get('/horarios/aula/:idAula', getHorariosPorAula);
 
+router.get('/horarios/:idAula/:idHoras/:idDia', getHorarioPorAulaYHorasYDia);
+
 //HORAS-------------------------------------------------------------------
 router.get('/horas', getHoras);
 router.get('/horas/:Id_horas', getHora);
 router.post('/horas', createHora);
 router.put('/horas/:Id_horas', updateHora);
 router.delete('/horas/:Id_horas', deleteHora);
+
+// Obtener una hora por ID
+router.get('/horas/:Id_horas', getHoraByID);
+
+// Ruta para obtener una hora por el campo Horas
+router.get('/horas/buscar/:horas', getHoraPorHoras);
 
 //IOT -------------------------------------------------------------------
 router.get('/iot', getIoTDevices);
@@ -141,7 +154,7 @@ router.post('/trabajadores', createTrabajador);
 router.put('/trabajadores/:Id_clave_trabajador', updateTrabajador);
 router.delete('/trabajadores/:Id_clave_trabajador', deleteTrabajador);
 router.get('/trabajadores/correo/:correo', getTrabajadorPorCorreo);
-router.get('/trabajadores/loginClave', iniciarSesionConClave); //para iniciar sesion el la movil
+router.post('/trabajadores/loginClave', iniciarSesionConClave); //para iniciar sesion el la movil
 router.post('/trabajadores/loginCorreo', iniciarSesionConCorreo); //para iniciar sesion en la web
 router.get('/trabajadores/clave/:Clave_trabajador', obtenerTrabajadorPorClave);
 
@@ -151,7 +164,8 @@ router.get('/ubicaciones-climas/:Id_ubicacion_Clima', getUbicacionClima);
 router.post('/ubicaciones-climas', createUbicacionClima);
 router.put('/ubicaciones-climas/:Id_ubicacion_Clima', updateUbicacionClima);
 router.delete('/ubicaciones-climas/:Id_ubicacion_Clima', deleteUbicacionClima);
-router.get('/ubicaciones_climas/aula/:idAula', getUbicacionesClimasPorAula);
+
+router.get('/ubicaciones-climas/aula/:idAula', getUbicacionesClimasPorAula);
 router.get('/ubicaciones-climas/clima/:idClima', getUbicacionClimaPorIdClima);
 
 //VINCULACION IOT -------------------------------------------------------------------
@@ -168,5 +182,17 @@ router.get('/codigosClima/:Id_codigo', getCodigoClima);
 router.post('/codigosClima', createCodigoClima);
 router.put('/codigosClima/:Id_codigo', updateCodigoClima);
 router.delete('/codigosClima/:Id_codigo', deleteCodigoClima);
+
+// PERMISOS ------------------------------------------------------------------------------
+router.get('/permisos', getPermisos);
+router.get('/permisos/:Id_permiso', getPermiso);
+router.post('/permisos', createPermiso);
+router.put('/permisos/:Id_permiso', updatePermiso);
+router.delete('/permisos/:Id_permiso', deletePermiso);
+
+router.get('/permisos/trabajador/:Id_clave_trabajador', getPermisosPorTrabajador);
+router.get('/permisos/trabajador/:id_clave_trabajador/clima/:id_clima', getPermisoPorTrabajadorYClima);
+router.delete('/permisos/trabajador/:id_clave_trabajador', deletePermisosPorTrabajador);
+
 
 export default router;
