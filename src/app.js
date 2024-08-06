@@ -6,8 +6,8 @@ import cors from 'cors';
 import db from './database/db.js';
 
 const app = express();
-const PORT = 8000;
-const HOST = 'localhost';
+const PORT = process.env.PORT || 8000; // Usa la variable de entorno PORT si está disponible
+const HOST = '0.0.0.0'; // Cambia a 0.0.0.0 para escuchar en todas las interfaces
 
 app.use(cors());
 app.use(express.json());
