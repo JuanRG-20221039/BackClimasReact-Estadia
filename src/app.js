@@ -12,13 +12,19 @@ app.use(cors());
 app.use(express.json());
 app.use('/', rutas);
 
-app.listen(PORT, () => {
-    console.log(`Example app listening on port ${PORT}`)
-})
+// Función asíncrona para iniciar el servidor y conectar a la base de datos
+const startServer = async () => {
+    try {
+        await db.authenticate();
+        console.log('Conexion exitosa a la base de datos ✔ ✔ ✔');
 
-try {
-    await db.authenticate();
-    console.log('Conexion exitosa a la base de datos ✔ ✔ ✔');
-} catch (error) {
-    console.log(`El error de la conexion es: ${error}`);
-}
+        app.listen(PORT, () => {
+            console.log(`Example app listening on port ${PORT}`);
+        });
+    } catch (error) {
+        console.log(`El error de la conexion es: ${error}`);
+    }
+};
+
+// Iniciamos el servidor
+startServer();
