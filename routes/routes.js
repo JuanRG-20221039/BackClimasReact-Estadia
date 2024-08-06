@@ -1,6 +1,6 @@
 import express from 'express';
 
-import { getAulas, crearAula, getAulaById, actualizarAula, eliminarAula, getAulasPorEdificio, getAulaPorNombreEdificioTipo, getAulaPorNombreYEdificio } from '/opt/render/project/src/controllers/aulasController.js';
+import { getAulas, crearAula, getAulaById, actualizarAula, eliminarAula, getAulasPorEdificio, getAulaPorNombreEdificioTipo, getAulaPorNombreYEdificio } from '../controllers/aulasController.js';
 import { getClimas, getClimaById, createClima, updateClima, deleteClima, getClimasPorMarca, getClimaByVinculacionId } from '../controllers/climasController.js';
 import { getDias, createDia, updateDia, deleteDia, getDiaById } from '../controllers/diasController.js';
 import { getEdificios, createEdificio, updateEdificio, deleteEdificio, getEdificioPorNombre, getEdificioPorId  } from '../controllers/edificiosController.js';
