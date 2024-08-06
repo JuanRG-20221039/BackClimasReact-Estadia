@@ -6,7 +6,7 @@ import cors from 'cors';
 import db from './database/db.js';
 
 const app = express();
-const PORT = process.env.PORT || 4000;
+const PORT = 8000;
 const HOST = 'localhost';
 
 app.use(cors());
@@ -22,10 +22,12 @@ const startServer = async () => {
         app.listen(PORT, HOST, () => {
             console.log(`Example app listening on ${HOST}:${PORT}`);
         });
-        
+
     } catch (error) {
         console.log(`El error de la conexion es: ${error}`);
     }
+
+    console.log('Después de conectar a la base de datos');
 };
 
 // Iniciamos el servidor
