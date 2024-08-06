@@ -6,14 +6,14 @@ import cors from 'cors';
 import db from './database/db.js';
 
 const app = express();
-const port = process.env.PORT || 4000;
+const PORT = process.env.PORT || 4000;
 
 app.use(cors());
 app.use(express.json());
 app.use('/', rutas);
 
-app.listen(port, () => {
-    console.log(`Example app listening on port ${port}`)
+app.listen(PORT, () => {
+    console.log(`Example app listening on port ${PORT}`)
 })
 
 try {
