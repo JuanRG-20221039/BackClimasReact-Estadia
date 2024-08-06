@@ -7,6 +7,7 @@ import db from './database/db.js';
 
 const app = express();
 const PORT = process.env.PORT || 4000;
+const HOST = 'localhost';
 
 app.use(cors());
 app.use(express.json());
@@ -18,9 +19,10 @@ const startServer = async () => {
         await db.authenticate();
         console.log('Conexion exitosa a la base de datos ✔ ✔ ✔');
 
-        app.listen(PORT, () => {
-            console.log(`Example app listening on port ${PORT}`);
+        app.listen(PORT, HOST, () => {
+            console.log(`Example app listening on ${HOST}:${PORT}`);
         });
+        
     } catch (error) {
         console.log(`El error de la conexion es: ${error}`);
     }
