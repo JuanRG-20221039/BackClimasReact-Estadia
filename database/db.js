@@ -1,7 +1,7 @@
 import { Sequelize } from 'sequelize';
 
-const db = new Sequelize('bdclimas', 'admin', 'bdclimas12', {
-    host: 'http://bdclimas.czkywqkockpq.us-east-2.rds.amazonaws.com',
+const db = new Sequelize('climabase', 'admin', 'bdclimas12', {
+    host: 'bdclimas.czkywqkockpq.us-east-2.rds.amazonaws.com',
     dialect: 'mysql'
 });
 
