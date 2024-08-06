@@ -6,17 +6,15 @@ import cors from 'cors';
 import db from './database/db.js';
 
 const app = express();
-const PORT = 8000;
-const HOST = '0.0.0.0'; // Escuchar en todas las interfaces de red
-const IP = '172.31.99.82'; // Tu dirección IP local
+const port = process.env.PORT || 4000;
 
 app.use(cors());
 app.use(express.json());
 app.use('/', rutas);
 
-app.listen(PORT, HOST, () => {
-    console.log(`Server is running on http://localhost:${PORT} and on the network at http://${IP}:${PORT}`);
-});
+app.listen(port, () => {
+    console.log(`Example app listening on port ${port}`)
+})
 
 try {
     await db.authenticate();
