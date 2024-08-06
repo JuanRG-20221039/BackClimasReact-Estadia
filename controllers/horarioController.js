@@ -95,3 +95,20 @@ export const getHorarioPorAulaYHorasYDia = async (req, res) => {
         res.status(500).json({ message: 'Error interno del servidor' });
     }
 };
+
+// Eliminar horarios por Id_aula
+export const deleteHorariosPorAula = async (req, res) => {
+    const { idAula } = req.params;
+    try {
+        const deletedCount = await Horario.destroy({
+            where: { Id_aula: idAula }
+        });
+        if (deletedCount === 0) {
+            res.status(404).json({ message: 'No se encontraron horarios para eliminar con el Id_aula especificado' });
+        } else {
+            res.json({ message: 'Horarios eliminados correctamente' });
+        }
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};

@@ -4,22 +4,22 @@ import { getAulas, crearAula, getAulaById, actualizarAula, eliminarAula, getAula
 import { getClimas, getClimaById, createClima, updateClima, deleteClima, getClimasPorMarca, getClimaByVinculacionId } from '../controllers/climasController.js';
 import { getDias, createDia, updateDia, deleteDia, getDiaById } from '../controllers/diasController.js';
 import { getEdificios, createEdificio, updateEdificio, deleteEdificio, getEdificioPorNombre, getEdificioPorId  } from '../controllers/edificiosController.js';
-import { getHistorialAcceso, createRegistroAcceso } from '../controllers/historialAccesoController.js';
+import { getHistorialAcceso, createRegistroAcceso, deleteRegistrosByIdClima } from '../controllers/historialAccesoController.js';
 import { getHistoricoIOT, createRegistroHistoricoIOT, deleteRegistrosByVinculacionId } from '../controllers/historicoIOTController.js';
-import { getHorarios, getHorario, createHorario, updateHorario, deleteHorario, getHorariosPorAula, getHorarioPorAulaYHorasYDia } from '../controllers/horarioController.js';
+import { getHorarios, getHorario, createHorario, updateHorario, deleteHorario, getHorariosPorAula, getHorarioPorAulaYHorasYDia, deleteHorariosPorAula } from '../controllers/horarioController.js';
 import { getHoras, getHora, createHora, updateHora, deleteHora, getHoraByID, getHoraPorHoras } from '../controllers/horasController.js';
-import { getIoTDevices, getIoTDevice, createIoTDevice, updateIoTDevice, deleteIoTDevice, getIoTDeviceByMac, getIoTDeviceMacById } from '../controllers/iotController.js';
+import { getIoTDevices, getIoTDevice, createIoTDevice, updateIoTDevice, deleteIoTDevice, getIoTDeviceByMac, getIoTDeviceMacById, getIoTDeviceAliasById } from '../controllers/iotController.js';
 import { getMarcas, getMarca, createMarca, updateMarca, deleteMarca, getMarcaByNombre } from '../controllers/marcaController.js';
 import { getPerfiles, getPerfil, createPerfil, updatePerfil, deletePerfil } from '../controllers/perfilController.js';
-import { getReportesUsuario, getReporteUsuario, createReporteUsuario, updateReporteUsuario, deleteReporteUsuario, getReportesPorAula } from '../controllers/reporteUsuarioController.js';
+import { getReportesUsuario, getReporteUsuario, createReporteUsuario, updateReporteUsuario, deleteReporteUsuario, getReportesPorAula, deleteReportesPorAula } from '../controllers/reporteUsuarioController.js';
 import { getTiposReporte, getTipoReporte, createTipoReporte, updateTipoReporte, deleteTipoReporte } from '../controllers/tipoReporteController.js';
-import { getTiposTrabajadores, getTipoTrabajador, createTipoTrabajador, updateTipoTrabajador, deleteTipoTrabajador } from '../controllers/tipoTrabajadorController.js';
+import { getTiposTrabajadores, getTipoTrabajador, createTipoTrabajador, updateTipoTrabajador, deleteTipoTrabajador, getTipoTrabajadorByTipo } from '../controllers/tipoTrabajadorController.js';
 import { getTrabajadores, createTrabajador, updateTrabajador, deleteTrabajador, obtenerTrabajadorPorClave, getTrabajadorPorCorreo, iniciarSesionConClave, iniciarSesionConCorreo, getTrabajadorPorId } from '../controllers/trabajadorController.js';
 import { getUbicacionesClimas, getUbicacionClima, createUbicacionClima, updateUbicacionClima, deleteUbicacionClima, getUbicacionesClimasPorAula, getUbicacionClimaPorIdClima } from '../controllers/ubicacionClimaController.js';
 import { getVinculacionesIot, getVinculacionIot, createVinculacionIot, updateVinculacionIot, deleteVinculacionIot, getModuloIotById } from '../controllers/vinculacionIotController.js';
-import { createTipoAula, deleteTipoAula, getTipoAulaById, getTiposAula, updateTipoAula } from '../controllers/tiposAulasController.js';
+import { createTipoAula, deleteTipoAula, getTipoAulaById, getTipoAulaByName, getTiposAula, updateTipoAula } from '../controllers/tiposAulasController.js';
 import { getCodigosClima, getCodigoClima, createCodigoClima, updateCodigoClima, deleteCodigoClima } from '../controllers/codigosClimasController.js';
-import { createPermiso, deletePermiso, deletePermisosPorTrabajador, getPermiso, getPermisoPorTrabajadorYClima, getPermisos, getPermisosPorTrabajador, updatePermiso } from '../controllers/permisosController.js';
+import { createPermiso, deletePermiso, deletePermisosByIdClima, deletePermisosPorTrabajador, getPermiso, getPermisoPorTrabajadorYClima, getPermisos, getPermisosPorTrabajador, updatePermiso } from '../controllers/permisosController.js';
 import { createPregunta, deletePregunta, getPreguntaById, getPreguntas, updatePregunta } from '../controllers/preguntasController.js';
 import { createRespuesta, deleteRespuesta, getRespuestaById, getRespuestas, getRespuestasByTrabajadorId, updateRespuesta } from '../controllers/respuestasController.js';
 
@@ -44,6 +44,7 @@ router.get('/tipos-aula/:Id_tipo_aula', getTipoAulaById);
 router.post('/tipos-aula', createTipoAula);
 router.put('/tipos-aula/:Id_tipo_aula', updateTipoAula);
 router.delete('/tipos-aula/:Id_tipo_aula', deleteTipoAula);
+router.get('/tipos-aula/nombre/:Tipo', getTipoAulaByName);
 
 //CLIMAS-------------------------------------------------------------------
 router.get('/climas', getClimas);
@@ -74,6 +75,8 @@ router.get('/edificios/nombre/:nombre', getEdificioPorNombre);
 //HISTORIAL DE ACCESO -------------------------------------------------------------------
 router.get('/historial-acceso', getHistorialAcceso);
 router.post('/historial-acceso', createRegistroAcceso);
+//elimina todos los registros por id clima
+router.delete('/historial-acceso/deleteAll/clima/:Id_Clima', deleteRegistrosByIdClima);
 
 //HISTORICO IOT -------------------------------------------------------------------
 router.get('/historico-iot', getHistoricoIOT);
@@ -89,6 +92,9 @@ router.delete('/horarios/:Id_horario', deleteHorario);
 router.get('/horarios/aula/:idAula', getHorariosPorAula);
 
 router.get('/horarios/:idAula/:idHoras/:idDia', getHorarioPorAulaYHorasYDia);
+
+// Ruta para eliminar horarios por Id_aula
+router.delete('/horarios/aula/:idAula', deleteHorariosPorAula);
 
 //HORAS-------------------------------------------------------------------
 router.get('/horas', getHoras);
@@ -111,6 +117,7 @@ router.put('/iot/:Id_iot', updateIoTDevice);
 router.delete('/iot/:Id_iot', deleteIoTDevice);
 router.get('/iot/mac/:mac', getIoTDeviceByMac);
 router.get('/iot/mac_id/:Id_iot', getIoTDeviceMacById);
+router.get('/iot/alias_id/:Id_iot', getIoTDeviceAliasById);
 
 //MARCAS-------------------------------------------------------------------
 router.get('/marcas', getMarcas);
@@ -135,6 +142,9 @@ router.put('/reportesUsuario/:Id_reporte_usuario', updateReporteUsuario);
 router.delete('/reportesUsuario/:Id_reporte_usuario', deleteReporteUsuario);
 router.get('/reportes/aula/:idAula', getReportesPorAula);
 
+// Ruta para eliminar reportes por Id_aula
+router.delete('/reportes/aula/:idAula', deleteReportesPorAula);
+
 //TIPOS DE REPORTE -------------------------------------------------------------------
 router.get('/tiposReporte', getTiposReporte);
 router.get('/tiposReporte/:Id_tipo_reporte', getTipoReporte);
@@ -148,6 +158,7 @@ router.get('/tiposTrabajadores/:Id_tipo_de_trabajador', getTipoTrabajador);
 router.post('/tiposTrabajadores', createTipoTrabajador);
 router.put('/tiposTrabajadores/:Id_tipo_de_trabajador', updateTipoTrabajador);
 router.delete('/tiposTrabajadores/:Id_tipo_de_trabajador', deleteTipoTrabajador);
+router.get('/tiposTrabajadores/tipo/:Tipo_trabajador', getTipoTrabajadorByTipo);
 
 //TRABAJADORES -------------------------------------------------------------------
 router.get('/trabajadores', getTrabajadores);
@@ -195,6 +206,9 @@ router.delete('/permisos/:Id_permiso', deletePermiso);
 router.get('/permisos/trabajador/:Id_clave_trabajador', getPermisosPorTrabajador);
 router.get('/permisos/trabajador/:id_clave_trabajador/clima/:id_clima', getPermisoPorTrabajadorYClima);
 router.delete('/permisos/trabajador/:id_clave_trabajador', deletePermisosPorTrabajador);
+
+//eliminar todos los permisos registrados por id clima
+router.delete('/permisos/deleteAll/clima/:Id_clima', deletePermisosByIdClima);
 
 //PREGUNTAS ------------------------------------------------------------------------------
 router.get('/preguntas', getPreguntas);

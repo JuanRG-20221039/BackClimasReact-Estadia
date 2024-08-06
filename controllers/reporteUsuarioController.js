@@ -73,3 +73,20 @@ export const getReportesPorAula = async (req, res) => {
         res.status(500).json({ message: 'Error interno del servidor' });
     }
 };
+
+// Eliminar reportes de usuario por Id_aula
+export const deleteReportesPorAula = async (req, res) => {
+    const { idAula } = req.params;
+    try {
+        const deletedCount = await ReporteUsuario.destroy({
+            where: { Id_aula: idAula }
+        });
+        if (deletedCount === 0) {
+            res.status(404).json({ message: 'No se encontraron reportes para eliminar con el Id_aula especificado' });
+        } else {
+            res.json({ message: 'Reportes eliminados correctamente' });
+        }
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};

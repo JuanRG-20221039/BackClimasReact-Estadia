@@ -63,3 +63,17 @@ export const deleteTipoAula = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 };
+
+// Obtener un tipo de aula por nombre
+export const getTipoAulaByName = async (req, res) => {
+    try {
+        const tipoAula = await TipoAula.findOne({ where: { Tipo: req.params.Tipo } });
+        if (tipoAula) {
+            res.json(tipoAula);
+        } else {
+            res.status(404).json({ message: 'Tipo de aula no encontrado' });
+        }
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};

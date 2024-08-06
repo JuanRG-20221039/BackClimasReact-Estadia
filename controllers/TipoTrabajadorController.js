@@ -57,3 +57,20 @@ export const deleteTipoTrabajador = async (req, res) => {
         res.json({ message: error.message });
     }
 };
+
+export const getTipoTrabajadorByTipo = async (req, res) => {
+    try {
+        const tipo = await TipoTrabajador.findOne({
+            where: {
+                Tipo_trabajador: req.params.Tipo_trabajador
+            }
+        });
+        if (tipo) {
+            res.json(tipo);
+        } else {
+            res.status(404).json({ message: 'Tipo de trabajador no encontrado.' });
+        }
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};

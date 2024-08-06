@@ -26,10 +26,14 @@ const IoT = db.define('model_iot', {
     Estado_clima: {
         type: DataTypes.TINYINT,
         allowNull: true
+    },
+    Alias_iot: {
+        type: DataTypes.STRING(50),
+        allowNull: true
     }
 }, {
-    tableName:'tbl_iot',
-    timestamps: false // Desactiva las columnas createdAt y updatedAt
+    tableName: 'tbl_iot',
+    timestamps: false
 });
 
 export default IoT;

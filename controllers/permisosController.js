@@ -113,3 +113,16 @@ export const deletePermisosPorTrabajador = async (req, res) => {
         res.json({ message: error.message });
     }
 };
+
+export const deletePermisosByIdClima = async (req, res) => {
+    const { Id_clima } = req.params;
+    try {
+        await Permiso.destroy({
+            where: { Id_clima }
+        });
+        res.status(200).json({ message: 'Permisos eliminados exitosamente' });
+    } catch (error) {
+        console.error('Error al eliminar los permisos:', error);
+        res.status(500).json({ message: 'Error al eliminar los permisos' });
+    }
+};

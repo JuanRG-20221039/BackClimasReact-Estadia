@@ -22,3 +22,16 @@ export const createRegistroAcceso = async (req, res) => {
         res.status(500).json({ message: 'Error al crear un nuevo registro de acceso' });
     }
 };
+
+export const deleteRegistrosByIdClima = async (req, res) => {
+    const { Id_Clima } = req.params;
+    try {
+        await HistorialAcceso.destroy({
+            where: { Id_Clima }
+        });
+        res.status(200).json({ message: 'Registros eliminados exitosamente' });
+    } catch (error) {
+        console.error('Error al eliminar los registros:', error);
+        res.status(500).json({ message: 'Error al eliminar los registros' });
+    }
+};

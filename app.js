@@ -8,7 +8,7 @@ import db from './database/db.js';
 const app = express();
 const PORT = 8000;
 const HOST = '0.0.0.0'; // Escuchar en todas las interfaces de red
-const IP = '172.31.99.83'; // Tu dirección IP local
+const IP = '172.31.99.82'; // Tu dirección IP local
 
 app.use(cors());
 app.use(express.json());
