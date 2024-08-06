@@ -1,9 +1,9 @@
-import rutas from './routes/routes.js';
+import rutas from './src/routes/routes.js';
 import express from 'express';
 import cors from 'cors';
 
 // Importamos la conexion a la base de datos
-import db from './database/db.js';
+import db from './src/database/db.js';
 
 const app = express();
 const PORT = process.env.PORT || 4000;
